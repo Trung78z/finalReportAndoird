@@ -48,14 +48,14 @@
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:gravity="end"
         android:text="Forgot password?"
         android:textColor="#FF7A00"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
     <Button
         android:id="@+id/signInButton"
@@ -145,11 +145,14 @@
             android:textSize="14sp" />
     </LinearLayout>
 
+    s
+    <!-- Social Icons -->
+
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/edit_text_background"
         android:hint="Password"
         android:inputType="textPassword"
@@ -157,15 +160,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordEditText2" />
+
+    <EditText
+        android:id="@+id/passwordEditText2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background"
+        android:hint="User Name"
+        android:inputType="text"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/emailEditText" />
 
-    <!-- Forgot Password -->
-
-    <!-- Sign In Button -->
-
-    <!-- Or sign in with -->
-
-    <!-- Social Icons -->
     <LinearLayout
         android:id="@+id/socialIcons"
         android:layout_width="wrap_content"
