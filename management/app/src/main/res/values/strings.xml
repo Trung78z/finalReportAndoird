@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">management</string>
+    <string name="login">Login to your account.</string>
+    <string name="please_sign">
+        Please sign in to your account
+    </string>
+    <string name="email_addre">
+        Email Address
+    </string>
+    <string name="enter_email">
+            Albertstevano@gmail.com
+        </string>
+    <string name="password">
+        Password
+    </string>
 </resources>
