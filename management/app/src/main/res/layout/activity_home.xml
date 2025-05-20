@@ -120,4 +120,108 @@
             </LinearLayout>
         </HorizontalScrollView>
     </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <GridLayout
+            android:id="@+id/grid_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:rowOrderPreserved="false">
+
+            <!-- Card 1 -->
+            <include
+                layout="@layout/card_fastfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- Card 2 -->
+            <include
+                layout="@layout/card_fastfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- Card 3 -->
+            <include
+                layout="@layout/card_fastfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- Card 4 -->
+            <include
+                layout="@layout/card_fastfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- Card 3 -->
+            <include
+                layout="@layout/card_fastfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- Card 4 -->
+            <include
+                layout="@layout/card_fastfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- Card 3 -->
+            <include
+                layout="@layout/card_fastfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- Card 4 -->
+            <include
+                layout="@layout/card_fastfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- Card 3 -->
+            <include
+                layout="@layout/card_fastfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- Card 4 -->
+            <include
+                layout="@layout/card_fastfood"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_margin="8dp"/>
+
+            <!-- Thêm các card khác nếu cần -->
+
+        </GridLayout>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
