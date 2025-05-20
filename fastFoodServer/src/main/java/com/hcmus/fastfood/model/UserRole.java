@@ -36,7 +36,7 @@ public class UserRole {
     
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<UserEntity> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
     
     // Custom constructor without users list
     public UserRole(String name, String description) {
