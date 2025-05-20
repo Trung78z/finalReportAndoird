@@ -1,13 +1,11 @@
 package com.hcmus.fastfood.controller;
 
 import com.hcmus.fastfood.dto.UserDTO;
-import com.hcmus.fastfood.mapper.UserMapper;
-import com.hcmus.fastfood.model.User;
-import com.hcmus.fastfood.repositories.UserRepo;
-import com.hcmus.fastfood.utils.JwtUtil;
+import com.hcmus.fastfood.service.UserService;
 import com.hcmus.fastfood.utils.ResponseEntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,10 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class UserInfoController {
 
     @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
-    private UserRepo userRepo;
+    private UserService userService;
 
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(HttpServletRequest request) {
@@ -30,13 +25,47 @@ public class UserInfoController {
                 return ResponseEntityUtils.error("Missing or invalid Authorization header", null);
             }
             String token = authHeader.substring(7);
-            String username = jwtUtil.extractUsername(token);
-            User user = userRepo.findByUsername(username)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
-            UserDTO userDTO = UserMapper.toDTO(user);
+            UserDTO userDTO = userService.getUserFromToken(token);
             return ResponseEntityUtils.success(userDTO);
         } catch (Exception ex) {
             return ResponseEntityUtils.error("Invalid token or user not found", null);
+        }
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllUsers(HttpServletRequest request) {
+        try {
+            return ResponseEntityUtils.success(userService.getAllUsers());
+        } catch (Exception ex) {
+            return ResponseEntityUtils.error("Failed to get users: " + ex.getMessage(), null);
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(
+            @PathVariable Long id,
+            @RequestBody UserDTO userDTO,
+            HttpServletRequest request) {
+        try {
+            UserDTO updatedUser = userService.updateUser(id, userDTO);
+            return ResponseEntityUtils.success(updatedUser);
+        } catch (Exception ex) {
+            return ResponseEntityUtils.error("Update failed: " + ex.getMessage(), null);
+        }
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(
+            @PathVariable Long id,
+            HttpServletRequest request) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntityUtils.success("User deleted successfully");
+        } catch (Exception ex) {
+            return ResponseEntityUtils.error("Delete failed: " + ex.getMessage(), null);
         }
     }
 }
