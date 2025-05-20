@@ -23,8 +23,14 @@ public class AuthenController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
-        String token = authenService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword());
-        return ResponseEntityUtils.success(token);
+        try {
+            String token = authenService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword());
+            return ResponseEntityUtils.success(token);
+        } catch (RuntimeException ex) {
+            return ResponseEntityUtils.error(ex.getMessage(), null);
+        } catch (Exception ex) {
+            return ResponseEntityUtils.serverError("Server error", null);
+        }
     }
 
     @PostMapping("/register")
