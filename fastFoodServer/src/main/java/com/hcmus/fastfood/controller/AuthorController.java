@@ -11,15 +11,15 @@ import com.hcmus.fastfood.dto.UserLoginDTO;
 import com.hcmus.fastfood.dto.UserRegisterDTO;
 import com.hcmus.fastfood.mapper.UserMapper;
 import com.hcmus.fastfood.model.User;
-import com.hcmus.fastfood.service.AuthenService;
+import com.hcmus.fastfood.service.AuthorService;
 import com.hcmus.fastfood.utils.ResponseEntityUtils;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthenController {
+public class AuthorController {
 
     @Autowired
-    private AuthenService authenService;
+    private AuthorService authenService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO) {
