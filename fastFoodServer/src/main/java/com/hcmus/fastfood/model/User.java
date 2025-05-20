@@ -8,6 +8,8 @@ import java.util.Date;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -18,16 +20,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(unique = true, length = 50)
     private String username;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String password;
 
-    @Column(nullable = false, unique = true, length = 100)
+    @Column(unique = true, length = 100)
     private String email;
 
     @Column(name = "phone_number", length = 20)
@@ -48,6 +50,7 @@ public class User {
     private String postalCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "role_id", nullable = false)
     private UserRole role;
 

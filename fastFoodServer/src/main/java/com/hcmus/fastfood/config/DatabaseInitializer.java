@@ -9,13 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.hcmus.fastfood.model.UserRole;
-import com.hcmus.fastfood.repositories.UserRoleRepository;
+import com.hcmus.fastfood.repositories.UserRoleRepo;
 
 @Configuration
 @RequiredArgsConstructor
 public class DatabaseInitializer {
 
-    private final UserRoleRepository roleRepository;
+    private final UserRoleRepo roleRepository;
 
     @Bean
     public CommandLineRunner initRoles() {
