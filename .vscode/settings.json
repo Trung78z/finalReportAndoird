@@ -1,0 +1,16 @@
+{
+    "sqltools.connections": [
+        {
+            "name": "My Supabase Postgres",
+            "driver": "PostgreSQL",
+            "server": "aws-0-ap-southeast-1.pooler.supabase.com",
+            "port": 6543,
+            "database": "postgres",
+            "username": "postgres.xdughvrexjubvzapggau",
+            "password": "PN0rUUaOONgOf0fk",
+            "ssl": true
+        }
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.compile.nullAnalysis.mode": "automatic"
+}
