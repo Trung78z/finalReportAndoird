@@ -15,7 +15,7 @@ import lombok.*;
 @Builder
 public class UserRole {
     
-    @Id
+    @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
