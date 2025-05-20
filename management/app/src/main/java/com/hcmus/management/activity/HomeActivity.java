@@ -18,7 +18,6 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected int getLayoutResourceId() {
-        Log.d("HomeActivity", "Inflating layout: activity_home");
         return R.layout.activity_home;
     }
 

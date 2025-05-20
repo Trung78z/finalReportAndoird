@@ -31,6 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
                 return true;
             } else if (itemId == R.id.nav_profile) {
+                // Uncomment and implement ProfileActivity if needed
 //                if (!(this instanceof ProfileActivity)) {
 //                    startActivity(new Intent(this, ProfileActivity.class));
 //                    overridePendingTransition(0, 0);
@@ -39,6 +40,10 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
             return false;
         });
+
+        // Inflate child layout and select menu item
+        setActivityLayout(getLayoutResourceId());
+        selectCurrentMenuItem();
     }
 
     private void setActivityLayout(@LayoutRes int layoutResId) {
