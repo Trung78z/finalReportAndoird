@@ -46,4 +46,13 @@ public class JwtUtil {
                 .getExpiration();
         return expiration.before(new Date());
     }
+
+    public String generateRefreshToken(String username) {
+        return Jwts.builder()
+            .setSubject(username)
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
+            .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()), SignatureAlgorithm.HS256)
+            .compact();
+    }
 }

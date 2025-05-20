@@ -1,5 +1,6 @@
 package com.hcmus.fastfood.service;
 
+import com.hcmus.fastfood.dto.ChangePasswordDTO;
 import com.hcmus.fastfood.model.User;
 import com.hcmus.fastfood.repositories.UserRepo;
 import com.hcmus.fastfood.repositories.UserRoleRepo;
@@ -10,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthorService {
+public class AuthenService {
 
     @Autowired
     private UserRepo userRepo;
@@ -54,5 +55,32 @@ public class AuthorService {
                         .orElseThrow(() -> new RuntimeException("Role not found")));
 
         return userRepo.save(user);
+    }
+
+    public void changePassword(String username, ChangePasswordDTO changePasswordDTO) {
+        User user = userRepo.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!passwordEncoder.matches(changePasswordDTO.getOldPassword(), user.getPassword())) {
+            throw new RuntimeException("Old password is incorrect");
+        }
+
+        user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+        userRepo.save(user);
+    }
+
+    public String refreshAccessToken(String refreshToken) {
+        if (refreshToken == null || refreshToken.isEmpty()) {
+            throw new RuntimeException("Missing refresh token");
+        }
+        String username = jwtUtil.extractUsername(refreshToken);
+        User user = userRepo.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        UserDetails userDetails = org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword())
+                .authorities("USER")
+                .build();
+        return jwtUtil.generateToken(userDetails);
     }
 }

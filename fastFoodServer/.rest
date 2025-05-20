@@ -17,3 +17,15 @@ Content-Type: application/json
     "email": "testuser@example.com"
 }
 
+###
+GET http://localhost:8080/api/user/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTc0Nzc1MDk4NCwiZXhwIjoxNzQ3Nzg2OTg0fQ._YVjY04qwUCrLSQk9qZEQ62P1gxha1y4VqPEuQE5dUE
+
+
+###
+POST http://localhost:8080/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImlhdCI6MTc0Nzc1MDY3NCwiZXhwIjoxNzQ4MzU1NDc0fQ.e4H8QohQTKV5fvol-NII_hVamhcnRVZfYx-mjjMqZk8"
+}
