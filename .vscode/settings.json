@@ -10,5 +10,7 @@
             "password": "PN0rUUaOONgOf0fk",
             "ssl": true
         }
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.compile.nullAnalysis.mode": "automatic"
 }
