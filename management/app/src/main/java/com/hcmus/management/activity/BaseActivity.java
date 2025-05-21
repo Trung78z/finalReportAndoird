@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hcmus.management.R;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     protected BottomNavigationView bottomNavigationView;
@@ -44,7 +45,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                     overridePendingTransition(0, 0);
                 }
                 return true;
+            } else if (itemId == R.id.nav_profile) {
+                if (!(this instanceof ProfileActivity)) {
+                    startActivity(new Intent(this, ProfileActivity.class));
+                    overridePendingTransition(0, 0);
+                }
+                return true;
             }
+
 
             return false;
         });

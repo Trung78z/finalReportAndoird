@@ -8,4 +8,6 @@
     <color name="image_placeholder">#EEEEEE</color>
     <color name="primary_orange">#FFA500</color>
     <color name="primaryColor">#FE8C00</color>
+    <color name="colorPrimary">#FF5722</color>
+
 </resources>
