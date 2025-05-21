@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,24 +21,16 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.hcmus.management.R;
+import com.hcmus.management.network.FoodRequest;
 
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 public class CreateFastFoodActivity extends AppCompatActivity {
 
@@ -212,62 +203,28 @@ public class CreateFastFoodActivity extends AppCompatActivity {
         btnCreate.setEnabled(false);
         Toast.makeText(this, "Uploading...", Toast.LENGTH_SHORT).show();
 
-        try {
-            // Convert image to Base64
-            InputStream inputStream = getContentResolver().openInputStream(selectedImageUri);
-            byte[] bytes = getBytes(inputStream);
-            String imageBase64 = android.util.Base64.encodeToString(bytes, android.util.Base64.DEFAULT);
-
-            // Create JSON request body
-            JSONObject requestBody = new JSONObject();
-            requestBody.put("name", name);
-            requestBody.put("price", price);
-            requestBody.put("description", description);
-            requestBody.put("image", imageBase64);
-
-            String url = "https://your-backend-api.com/fooditems";
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-                    Request.Method.POST,
-                    url,
-                    requestBody,
-                    response -> {
+        FoodRequest.sendFoodItem(
+                this,
+                requestQueue,
+                selectedImageUri,
+                name,
+                price,
+                description,
+                new FoodRequest.Callback() {
+                    @Override
+                    public void onSuccess() {
                         btnCreate.setEnabled(true);
                         Toast.makeText(CreateFastFoodActivity.this, "Food item created successfully!", Toast.LENGTH_SHORT).show();
                         clearForm();
-                    },
-                    error -> {
-                        btnCreate.setEnabled(true);
-                        Log.e("API_ERROR", "Error: " + error.toString());
-                        Toast.makeText(CreateFastFoodActivity.this, "Failed to create food item", Toast.LENGTH_SHORT).show();
                     }
-            ) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> headers = new HashMap<>();
-                    // Add your authorization header if needed
-                    // headers.put("Authorization", "Bearer " + yourToken);
-                    return headers;
+
+                    @Override
+                    public void onError(String message) {
+                        btnCreate.setEnabled(true);
+                        Toast.makeText(CreateFastFoodActivity.this, "Failed: " + message, Toast.LENGTH_SHORT).show();
+                    }
                 }
-            };
-
-            requestQueue.add(jsonObjectRequest);
-
-        } catch (Exception e) {
-            btnCreate.setEnabled(true);
-            e.printStackTrace();
-            Toast.makeText(this, "Error preparing data", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private byte[] getBytes(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int len;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-        return byteBuffer.toByteArray();
+        );
     }
 
     private void clearForm() {

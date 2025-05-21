@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.management.R;
 import com.hcmus.management.adapter.CartAdapter;
-import com.hcmus.management.model.CartItem;
+import com.hcmus.management.model.FoodItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ManagerFoodActivity extends BaseActivity {
     private CartAdapter adapter;
-    private List<CartItem> cartItems;
+    private List<FoodItem> foodItems;
     private ImageButton btnBack;
     private RecyclerView rvCartItems;
     @Override
@@ -25,10 +25,10 @@ public class ManagerFoodActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         rvCartItems = findViewById(R.id.rvCartItems);
         rvCartItems.setLayoutManager(new LinearLayoutManager(this));
-        cartItems = new ArrayList<>();
-        adapter = new CartAdapter(cartItems);
+        foodItems = new ArrayList<>();
+        adapter = new CartAdapter(foodItems);
         rvCartItems.setAdapter(adapter);
-        CartItem item = new CartItem("Burger With Meat", 12.23, 1, true, R.drawable.sample_burger);
+        FoodItem item = new FoodItem("Burger With Meat", 12.23, 1, true, R.drawable.sample_burger);
         adapter.addItem(item);
         adapter.addItem(item);
         adapter.addItem(item);

@@ -37,6 +37,20 @@ public class AuthenService {
         return jwtUtil.generateToken(userDetails);
     }
 
+    public String loginByEmail(String email, String password) {
+        User user = userRepo.findByEmail(email).orElse(null);
+        if (user == null || !user.isActive() || !passwordEncoder.matches(password, user.getPassword())) {
+            throw new RuntimeException("Invalid email or password");
+        }
+        String roleName = user.getRole() != null ? user.getRole().getName() : "USER";
+        UserDetails userDetails = org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword())
+                .authorities(roleName)
+                .build();
+        return jwtUtil.generateToken(userDetails);
+    }
+
     public User register(String username, String password, String email) {
         if (userRepo.existsByUsername(username)) {
             throw new RuntimeException("Username already exists");

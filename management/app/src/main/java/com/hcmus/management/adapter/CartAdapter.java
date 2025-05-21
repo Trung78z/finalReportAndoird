@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.management.R;
-import com.hcmus.management.model.CartItem;
+import com.hcmus.management.model.FoodItem;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ import lombok.NonNull;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
-    private List<CartItem> items;
+    private List<FoodItem> items;
 
-    public CartAdapter(List<CartItem> items) {
+    public CartAdapter(List<FoodItem> items) {
         this.items = items;
     }
 
@@ -52,7 +52,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        CartItem item = items.get(position);
+        FoodItem item = items.get(position);
 
         holder.ivFood.setImageResource(item.getImageResId());
         holder.tvFoodName.setText(item.getName());
@@ -84,7 +84,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         return items.size();
     }
 
-    public void addItem(CartItem item) {
+    public void addItem(FoodItem item) {
         items.add(item);
         notifyItemInserted(items.size() - 1);
     }

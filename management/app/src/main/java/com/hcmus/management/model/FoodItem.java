@@ -3,14 +3,15 @@ package com.hcmus.management.model;
 import lombok.Data;
 
 @Data
-public class CartItem {
+public class FoodItem {
+    private String id;
     private String name;
     private double price;
     private int quantity;
     private boolean isChecked;
     private int imageResId;
     private double unitPrice;
-    public CartItem(String name, double price, int quantity, boolean isChecked, int imageResId) {
+    public FoodItem(String name, double price, int quantity, boolean isChecked, int imageResId) {
         this.name = name;
         this.price = price;
         this.unitPrice = price;

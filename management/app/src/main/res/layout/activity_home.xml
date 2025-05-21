@@ -123,10 +123,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
+        android:fillViewport="true"
+        android:focusableInTouchMode="true"
+        android:descendantFocusability="blocksDescendants"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingBottom="120dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
@@ -138,90 +141,11 @@
             android:columnCount="2"
             android:orientation="horizontal"
             android:padding="8dp"
-            android:rowOrderPreserved="false">
+            android:rowOrderPreserved="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false">
 
-            <!-- Card 1 -->
-            <include
-                layout="@layout/card_fastfood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
-
-            <!-- Card 2 -->
-            <include
-                layout="@layout/card_fastfood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
-
-            <!-- Card 3 -->
-            <include
-                layout="@layout/card_fastfood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
-
-            <!-- Card 4 -->
-            <include
-                layout="@layout/card_fastfood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
-
-            <!-- Card 3 -->
-            <include
-                layout="@layout/card_fastfood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
-
-            <!-- Card 4 -->
-            <include
-                layout="@layout/card_fastfood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
-
-            <!-- Card 3 -->
-            <include
-                layout="@layout/card_fastfood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
-
-            <!-- Card 4 -->
-            <include
-                layout="@layout/card_fastfood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
-
-            <!-- Card 3 -->
-            <include
-                layout="@layout/card_fastfood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
-
-            <!-- Card 4 -->
-            <include
-                layout="@layout/card_fastfood"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:layout_margin="8dp"/>
-
-            <!-- Thêm các card khác nếu cần -->
-
+            <!-- Cards will be added programmatically -->
         </GridLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

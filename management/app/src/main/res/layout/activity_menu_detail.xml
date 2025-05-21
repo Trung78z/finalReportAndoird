@@ -1,12 +1,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <!-- Top Image with rounded corners -->
@@ -23,12 +24,14 @@
                 android:src="@drawable/sample_burger" />
 
             <!-- Back and Favorite buttons -->
+
             <ImageButton
-                android:id="@+id/btn_back"
+                android:id="@+id/btnBack"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="start|top"
-                android:layout_margin="16dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/bg_circle_white"
                 android:contentDescription="Back"
                 android:src="@drawable/ic_arrow_back"
@@ -39,7 +42,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="end|top"
-                android:layout_margin="16dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/bg_circle_white"
                 android:contentDescription="Favorite"
                 android:src="@drawable/ic_favorite" />
@@ -48,7 +52,7 @@
         <!-- Details Card -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/rounded_top_white"
             android:orientation="vertical"
             android:padding="24dp">
@@ -132,18 +136,18 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_rounded_button"
-                    android:backgroundTint="#871818"
                     android:padding="0dp"
                     android:text="-"
                     android:textColor="#000000"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    app:backgroundTint="#FFA500" />
 
                 <!-- Quantity Display -->
                 <TextView
                     android:id="@+id/tv_quantity"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:background="#EEEEEE"
+                    android:background="@drawable/bg_rounded_button"
                     android:gravity="center"
                     android:text="1"
                     android:textColor="#000000"
@@ -159,7 +163,8 @@
                     android:padding="0dp"
                     android:text="+"
                     android:textColor="#00AA00"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    app:backgroundTint="#FFA500" />
 
                 <!-- Spacer -->
                 <View
@@ -180,7 +185,7 @@
 
             <!-- Add to Cart Button -->
             <Button
-                android:id="@+id/btn_add_to_cart"
+                android:id="@+id/btnAddToCart"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="24dp"

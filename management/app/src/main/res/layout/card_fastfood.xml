@@ -2,9 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="160dp"
-    android:layout_height="200dp"
+    android:layout_height="205dp"
     android:layout_margin="8dp"
     android:clickable="true"
+    android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="12dp"
     app:cardElevation="2dp">
@@ -15,8 +16,9 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- Burger Image -->
+        <!-- Food Image -->
         <ImageView
+            android:id="@+id/iv_food"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginBottom="8dp"
@@ -24,71 +26,74 @@
             android:scaleType="centerCrop"
             android:src="@drawable/burger_with_meat" />
 
-        <!-- Burger Name -->
+        <!-- Food Name -->
         <TextView
+            android:id="@+id/tv_food_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Burger With Meat"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <!-- Rating Row -->
+        <!-- Rating and Distance Row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
+            <!-- Rating -->
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_star_filled"
                 app:tint="@color/rating_yellow" />
 
             <TextView
+                android:id="@+id/rating_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginEnd="20dp"
                 android:text="4.9"
+                android:textColor="@color/text_secondary"
                 android:textSize="14sp" />
 
+            <!-- Spacer -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Distance -->
             <ImageView
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:layout_marginStart="20dp"
                 android:src="@drawable/ic_location"
-                app:tint="@color/text_secondary" />
+                app:tint="@color/primaryColor" />
 
             <TextView
+                android:id="@+id/distance_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
+                android:layout_marginStart="4dp"
                 android:text="190m"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
-
-
         </LinearLayout>
 
-        <!-- Distance and Price Row -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Price -->
+        <TextView
+            android:id="@+id/tv_food_price"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left"
-            android:orientation="horizontal">
-
-
-            <!-- Price -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="$17,230"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-        </LinearLayout>
+            android:layout_marginTop="8dp"
+            android:text="$17,230"
+            android:textColor="@color/primaryColor"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

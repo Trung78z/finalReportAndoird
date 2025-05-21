@@ -35,15 +35,15 @@ public class AuthenController {
     public ResponseEntity<?> login(@RequestBody UserLoginDTO userLoginDTO,
             jakarta.servlet.http.HttpServletResponse response) {
         try {
-            String accessToken = authenService.login(userLoginDTO.getUsername(), userLoginDTO.getPassword());
-            String refreshToken = jwtUtil.generateRefreshToken(userLoginDTO.getUsername());
+            // Change login to use email and password
+            String accessToken = authenService.loginByEmail(userLoginDTO.getEmail(), userLoginDTO.getPassword());
+            String refreshToken = jwtUtil.generateRefreshToken(userLoginDTO.getEmail());
 
             // Set refresh token as HttpOnly cookie
             jakarta.servlet.http.Cookie cookie = new jakarta.servlet.http.Cookie("refreshToken", refreshToken);
             cookie.setHttpOnly(true);
-            cookie.setPath("/"); // or "/api/auth/refresh" for more restriction
+            cookie.setPath("/");
             cookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
-            // cookie.setSecure(true); // Uncomment if using HTTPS
             response.addCookie(cookie);
 
             Map<String, Object> tokens = new HashMap<>();

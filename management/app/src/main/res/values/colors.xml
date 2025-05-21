@@ -6,4 +6,6 @@
     <color name="rating_yellow">#FFC107</color>
     <color name="text_secondary">#757575</color>
     <color name="image_placeholder">#EEEEEE</color>
+    <color name="primary_orange">#FFA500</color>
+    <color name="primaryColor">#FE8C00</color>
 </resources>
