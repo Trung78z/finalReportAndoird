@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:layout_marginTop="40dp"
         android:background="#FFF">
 
         <ImageButton
@@ -85,11 +86,10 @@
             android:textColor="#FFF" />
     </LinearLayout>
 
-    <!-- Cart Items -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCartItems"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="350dp"
         android:layout_weight="1"
         android:padding="8dp" />
 
@@ -187,7 +187,7 @@
 
     <!-- Order Now Button -->
     <Button
-        android:id="@+id/btnOrderNow"
+        android:id="@+id/btnAddNew"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_margin="16dp"
@@ -195,30 +195,4 @@
         android:text="Order Now"
         android:textColor="#FFF" />
 
-    <!-- Bottom Navigation (simple mockup) -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="#FFF"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_home" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_cart" />
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_profile" />
-    </LinearLayout>
 </LinearLayout>
