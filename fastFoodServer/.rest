@@ -1,10 +1,13 @@
 ###
-POST http://localhost:8080/api/auth/login
+
+@BaseURL =https://store.food.hcmuss.site/api
+### Auth API
+POST {{BaseURL}}/auth/login
 Content-Type: application/json
 
 {
     "email": "testuser@example.com",
-    "password": "testpass"
+    "password": "testpasss"
 }
 
 ###
