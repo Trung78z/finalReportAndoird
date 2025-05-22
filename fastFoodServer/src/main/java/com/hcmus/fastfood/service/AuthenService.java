@@ -24,19 +24,6 @@ public class AuthenService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public String login(String username, String password) {
-        User user = userRepo.findByUsername(username).orElse(null);
-        if (user == null || !user.isActive() || !passwordEncoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid username or password");
-        }
-        UserDetails userDetails = org.springframework.security.core.userdetails.User
-                .withUsername(user.getUsername())
-                .password(user.getPassword())
-                .authorities("USER")
-                .build();
-        return jwtUtil.generateToken(userDetails);
-    }
-
     public String loginByEmail(String email, String password) {
         User user = userRepo.findByEmail(email).orElse(null);
         if (user == null || !user.isActive() || !passwordEncoder.matches(password, user.getPassword())) {
@@ -49,6 +36,14 @@ public class AuthenService {
                 .authorities(roleName)
                 .build();
         return jwtUtil.generateToken(userDetails);
+    }
+
+    public User getUserNameByEmail(String email) {
+        User user = userRepo.findByEmail(email).orElse(null);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        return user;
     }
 
     public User register(String username, String password, String email) {

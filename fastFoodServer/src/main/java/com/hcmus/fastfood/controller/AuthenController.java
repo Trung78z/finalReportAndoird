@@ -37,8 +37,9 @@ public class AuthenController {
         try {
             // Change login to use email and password
             String accessToken = authenService.loginByEmail(userLoginDTO.getEmail(), userLoginDTO.getPassword());
-            String refreshToken = jwtUtil.generateRefreshToken(userLoginDTO.getEmail());
 
+            User user = authenService.getUserNameByEmail(userLoginDTO.getEmail());
+            String refreshToken = jwtUtil.generateRefreshToken(user.getUsername());
             // Set refresh token as HttpOnly cookie
             jakarta.servlet.http.Cookie cookie = new jakarta.servlet.http.Cookie("refreshToken", refreshToken);
             cookie.setHttpOnly(true);
