@@ -28,6 +28,7 @@
         <activity android:name=".activity.PaymentActivity" />
         <activity android:name=".activity.ManagerFoodActivity" />
         <activity android:name=".activity.CreateFastFoodActivity" />
+        <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".activity.HomeActivity"
             android:exported="true" />
@@ -38,7 +39,7 @@
             android:name=".activity.OrderActivity"
             android:exported="true" />
         <activity
-            android:name=".activity.LoginActivity"
+            android:name=".activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

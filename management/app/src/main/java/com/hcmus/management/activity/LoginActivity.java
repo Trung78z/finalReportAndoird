@@ -28,13 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (AuthRequest.isLoggedIn(this)) {
-            goToHome();
-        }
-
-        if (!AuthRequest.isLoggedIn(this)) {
-            refreshTokenIfNeeded();
-        }
         EdgeToEdge.enable(this);
         requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         setContentView(R.layout.activity_login);
@@ -101,27 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
-
-    private void refreshTokenIfNeeded() {
-        AuthRequest.refreshToken(this, requestQueue, new AuthRequest.Callback() {
-            @Override
-            public void onSuccess(JSONObject response) {
-                String newAccessToken = response.optString("accessToken");
-                if (!newAccessToken.isEmpty()) {
-                    getSharedPreferences("MyAppPrefs", MODE_PRIVATE)
-                            .edit()
-                            .putString("ACCESS_TOKEN", newAccessToken)
-                            .apply();
-                    goToHome();
-                } else {
-                }
-            }
-
-            @Override
-            public void onError(String message) {
-            }
-        });
     }
 
     private void goToHome() {

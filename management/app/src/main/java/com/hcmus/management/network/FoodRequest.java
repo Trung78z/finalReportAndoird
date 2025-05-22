@@ -3,12 +3,12 @@ package com.hcmus.management.network;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Base64;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.hcmus.management.common.Api;
 
 import org.json.JSONObject;
 
@@ -46,11 +46,9 @@ public class FoodRequest {
             requestBody.put("description", description);
             requestBody.put("image", imageBase64);
 
-            String url = "https://your-backend-api.com/fooditems";
-
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    url,
+                    Api.createFood,
                     requestBody,
                     response -> callback.onSuccess(),
                     error -> callback.onError(error.toString())
@@ -58,7 +56,7 @@ public class FoodRequest {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<>();
-                    // headers.put("Authorization", "Bearer " + token);
+                    headers.put("Authorization", "Bearer " + AuthRequest.getAccessToken(context));
                     return headers;
                 }
             };
