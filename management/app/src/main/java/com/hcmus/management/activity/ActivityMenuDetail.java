@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.hcmus.management.R;
 import com.hcmus.management.model.FoodItem;
 
-public class MenuDetailActivity extends AppCompatActivity {
+public class ActivityMenuDetail extends AppCompatActivity {
     private ImageButton btnBack;
     private Button btnAddToCart;
     private ImageView imgFood;

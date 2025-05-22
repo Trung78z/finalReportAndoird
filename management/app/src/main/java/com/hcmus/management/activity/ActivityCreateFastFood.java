@@ -34,7 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class CreateFastFoodActivity extends AppCompatActivity {
+public class ActivityCreateFastFood extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int CAMERA_REQUEST = 2;
@@ -67,19 +67,34 @@ public class CreateFastFoodActivity extends AppCompatActivity {
 
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-            ActivityCompat.requestPermissions(this,
-                    new String[]{
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    },
-                    REQUEST_PERMISSIONS);
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                new AlertDialog.Builder(this)
+                        .setTitle("Permissions Needed")
+                        .setMessage("This app needs camera and storage permissions to select images")
+                        .setPositiveButton("OK", (dialog, which) -> requestPermissions())
+                        .setNegativeButton("Cancel", null)
+                        .create()
+                        .show();
+            } else {
+                requestPermissions();
+            }
         } else {
             showImageSelectionDialog();
         }
+    }
+
+    private void requestPermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                        // WRITE_EXTERNAL_STORAGE not needed for Android 10+ if using MediaStore
+                },
+                REQUEST_PERMISSIONS);
     }
 
     @Override
@@ -214,7 +229,7 @@ public class CreateFastFoodActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(JSONObject response) {
                         btnCreate.setEnabled(true);
-                        Toast.makeText(CreateFastFoodActivity.this, "Food item created successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityCreateFastFood.this, "Food item created successfully!", Toast.LENGTH_SHORT).show();
                         finish();
                         clearForm();
                     }
@@ -222,7 +237,7 @@ public class CreateFastFoodActivity extends AppCompatActivity {
                     @Override
                     public void onError(String message) {
                         btnCreate.setEnabled(true);
-                        Toast.makeText(CreateFastFoodActivity.this, "Failed: " + message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityCreateFastFood.this, "Failed: " + message, Toast.LENGTH_SHORT).show();
                     }
                 }
         );

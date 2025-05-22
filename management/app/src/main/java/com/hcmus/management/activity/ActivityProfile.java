@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.hcmus.management.R;
 
-public class ProfileActivity extends BaseActivity {
+public class ActivityProfile extends ActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

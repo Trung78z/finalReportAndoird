@@ -8,22 +8,15 @@ import android.widget.ImageButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.hcmus.management.R;
 import com.hcmus.management.adapter.CartAdapter;
 import com.hcmus.management.model.FoodItem;
 import com.hcmus.management.network.FoodRequest;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerFoodActivity extends BaseActivity {
+public class ActivityManagerFood extends ActivityBase {
     private CartAdapter adapter;
     private List<FoodItem> foodItems;
     private ImageButton btnBack;
@@ -43,7 +36,7 @@ public class ManagerFoodActivity extends BaseActivity {
         btnBack.setOnClickListener(v -> finish());
         Button btnAddNew = findViewById(R.id.btnAddNew);
         btnAddNew.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CreateFastFoodActivity.class);
+            Intent intent = new Intent(this, ActivityCreateFastFood.class);
             startActivity(intent);
         });
     }

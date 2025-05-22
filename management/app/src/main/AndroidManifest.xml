@@ -23,23 +23,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Management"
         tools:targetApi="31">
-        <activity android:name=".activity.ProfileActivity" />
-        <activity android:name=".activity.MenuDetailActivity" />
-        <activity android:name=".activity.PaymentActivity" />
-        <activity android:name=".activity.ManagerFoodActivity" />
-        <activity android:name=".activity.CreateFastFoodActivity" />
-        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.ActivityProfile" />
+        <activity android:name=".activity.ActivityMenuDetail" />
+        <activity android:name=".activity.ActivityPayment" />
+        <activity android:name=".activity.ActivityManagerFood" />
+        <activity android:name=".activity.ActivityCreateFastFood" />
+        <activity android:name=".activity.ActivityLogin" />
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".activity.ActivityHome"
             android:exported="true" />
         <activity
-            android:name=".activity.RegisterActivity"
+            android:name=".activity.ActivityRegister"
             android:exported="true" />
         <activity
-            android:name=".activity.OrderActivity"
+            android:name=".activity.ActivityOrder"
             android:exported="true" />
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".activity.ActivitySplash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -16,7 +16,7 @@ import com.hcmus.management.model.FoodItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderActivity extends BaseActivity {
+public class ActivityOrder extends ActivityBase {
     private RecyclerView rvCartItems;
 
     private CartAdapter adapter;
@@ -44,7 +44,7 @@ public class OrderActivity extends BaseActivity {
 
 
         btnOrderNow.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PaymentActivity.class);
+            Intent intent = new Intent(this, ActivityPayment.class);
             startActivity(intent);
         });
     }

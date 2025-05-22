@@ -15,7 +15,7 @@ import com.hcmus.management.network.FoodRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends BaseActivity {
+public class ActivityHome extends ActivityBase {
     private List<FoodItem> foodItems = new ArrayList<>();
 
     @Override
@@ -54,7 +54,7 @@ public class HomeActivity extends BaseActivity {
             tvPrice.setText(String.format("$%.2f", item.getPrice()));
 
             cardView.setOnClickListener(v -> {
-                Intent intent = new Intent(this, MenuDetailActivity.class);
+                Intent intent = new Intent(this, ActivityMenuDetail.class);
                 // Pass the food item to the detail activity
                 intent.putExtra("food_item", item);
                 startActivity(intent);

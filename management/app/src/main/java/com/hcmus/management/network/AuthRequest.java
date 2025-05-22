@@ -33,6 +33,7 @@ public class AuthRequest {
 
     public interface Callback {
         void onSuccess(JSONObject response);
+
         void onError(String message);
     }
 
@@ -68,6 +69,28 @@ public class AuthRequest {
         }
     }
 
+    public static void register(Context context, RequestQueue requestQueue,
+                                String email, String password, String username, Callback callback) {
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("email", email);
+            requestBody.put("password", password);
+            requestBody.put("username", username);
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.POST,
+                    Api.apiRegister,
+                    requestBody,
+                    response -> handleLoginResponse(context, response, callback),
+                    error -> handleLoginError(error, callback)
+            );
+
+            requestQueue.add(request);
+        } catch (JSONException e) {
+            callback.onError("Invalid login request format");
+        }
+    }
+
+
     private static void handleLoginResponse(Context context, JSONObject response, Callback callback) {
         try {
             if (response.getBoolean("success")) {
@@ -89,8 +112,9 @@ public class AuthRequest {
             try {
                 String jsonString = new String(error.networkResponse.data,
                         HttpHeaderParser.parseCharset(error.networkResponse.headers));
-                JSONObject errorResponse = new JSONObject(jsonString);
-                errorMsg = errorResponse.optString("msg", errorMsg);
+                // Pass the full JSON string to the callback for better error handling in UI
+                callback.onError(jsonString);
+                return;
             } catch (Exception e) {
                 errorMsg = "Invalid credentials";
             }

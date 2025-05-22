@@ -13,7 +13,7 @@ import com.hcmus.management.network.VolleySingleton;
 
 import org.json.JSONObject;
 
-public class SplashActivity extends AppCompatActivity {
+public class ActivitySplash extends AppCompatActivity {
 
     private static final String TAG = "SplashActivity";
     RequestQueue requestQueue;
@@ -40,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject response) {
                 // Get token from SharedPreferences (already saved by AuthRequest)
-                String newAccessToken = AuthRequest.getAccessToken(SplashActivity.this);
+                String newAccessToken = AuthRequest.getAccessToken(ActivitySplash.this);
 
                 if (newAccessToken != null && !newAccessToken.isEmpty()) {
                     goToHome();
@@ -60,13 +60,13 @@ public class SplashActivity extends AppCompatActivity {
 
     private void goToHome() {
         Log.d(TAG, "Navigating to HomeActivity");
-        startActivity(new Intent(this, HomeActivity.class));
+        startActivity(new Intent(this, ActivityHome.class));
         finish();
     }
 
     private void goToLogin() {
         Log.d(TAG, "Navigating to LoginActivity");
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, ActivityLogin.class));
         finish();
     }
 }

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hcmus.management.R;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class ActivityBase extends AppCompatActivity {
 
     protected BottomNavigationView bottomNavigationView;
 
@@ -28,26 +28,26 @@ public abstract class BaseActivity extends AppCompatActivity {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_home) {
-                if (!(this instanceof HomeActivity)) {
-                    startActivity(new Intent(this, HomeActivity.class));
+                if (!(this instanceof ActivityHome)) {
+                    startActivity(new Intent(this, ActivityHome.class));
                     overridePendingTransition(0, 0); // Disable transition animation
                 }
                 return true;
             } else if (itemId == R.id.nav_cart) {
-                if (!(this instanceof OrderActivity)) {
-                    startActivity(new Intent(this, OrderActivity.class));
+                if (!(this instanceof ActivityOrder)) {
+                    startActivity(new Intent(this, ActivityOrder.class));
                     overridePendingTransition(0, 0);
                 }
                 return true;
             } else if (itemId == R.id.nav_food) {
-                if (!(this instanceof ManagerFoodActivity)) {
-                    startActivity(new Intent(this, ManagerFoodActivity.class));
+                if (!(this instanceof ActivityManagerFood)) {
+                    startActivity(new Intent(this, ActivityManagerFood.class));
                     overridePendingTransition(0, 0);
                 }
                 return true;
             } else if (itemId == R.id.nav_profile) {
-                if (!(this instanceof ProfileActivity)) {
-                    startActivity(new Intent(this, ProfileActivity.class));
+                if (!(this instanceof ActivityProfile)) {
+                    startActivity(new Intent(this, ActivityProfile.class));
                     overridePendingTransition(0, 0);
                 }
                 return true;

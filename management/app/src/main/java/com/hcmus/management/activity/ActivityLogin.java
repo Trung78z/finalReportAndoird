@@ -2,10 +2,8 @@ package com.hcmus.management.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +19,7 @@ import com.hcmus.management.network.VolleySingleton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends AppCompatActivity {
+public class ActivityLogin extends AppCompatActivity {
 
     private RequestQueue requestQueue;
 
@@ -33,10 +31,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         TextView btnLogin = findViewById(R.id.registerLink);
         btnLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(this, RegisterActivity.class);
+            Intent intent = new Intent(this, ActivityRegister.class);
             startActivity(intent);
         });
-        findViewById(R.id.signInButton).setOnClickListener(v -> handleLogin());
+        findViewById(R.id.signupBtn).setOnClickListener(v -> handleLogin());
 
     }
 
@@ -49,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        findViewById(R.id.signInButton).setEnabled(false);
+        findViewById(R.id.signupBtn).setEnabled(false);
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Logging in...");
         progressDialog.setCancelable(false);
@@ -63,33 +61,42 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(JSONObject response) {
                         progressDialog.dismiss();
-                        findViewById(R.id.signInButton).setEnabled(true);
+                        findViewById(R.id.signupBtn).setEnabled(true);
                         try {
                             if (response.getBoolean("success")) {
-                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ActivityLogin.this, "Login successful", Toast.LENGTH_SHORT).show();
                                 goToHome();
                             } else {
                                 // Handle API-reported failure
                                 String errorMsg = response.getString("msg");
-                                Toast.makeText(LoginActivity.this, errorMsg, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ActivityLogin.this, errorMsg, Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(LoginActivity.this, "Error processing response", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityLogin.this, "Error processing response", Toast.LENGTH_SHORT).show();
                             Log.e("LOGIN_ERROR", "JSON parsing error", e);
                         }
                     }
-
                     @Override
                     public void onError(String message) {
                         progressDialog.dismiss();
-                        findViewById(R.id.signInButton).setEnabled(true);
+                        findViewById(R.id.signupBtn).setEnabled(true);
+
+                        // Try to parse server error message if present
+                        try {
+                            JSONObject errorObj = new JSONObject(message);
+                            if (errorObj.has("msg")) {
+                                Toast.makeText(ActivityLogin.this, errorObj.getString("msg"), Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        } catch (Exception ignored) {}
+
 
                         // Check if this is our API error message
                         if (message.contains("Invalid email or password")) {
-                            Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ActivityLogin.this, message, Toast.LENGTH_SHORT).show();
                         } else {
                             // Handle other types of errors (network, etc.)
-                            Toast.makeText(LoginActivity.this,
+                            Toast.makeText(ActivityLogin.this,
                                     "Login failed: Server not responding. Please try again later.", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -97,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToHome() {
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        Intent intent = new Intent(ActivityLogin.this, ActivityHome.class);
         startActivity(intent);
         finish();
     }

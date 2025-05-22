@@ -13,7 +13,7 @@ import com.hcmus.management.model.FoodItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CartActivity extends AppCompatActivity {
+public class ActivityCart extends AppCompatActivity {
 
     private RecyclerView rvCartItems;
     private CartAdapter adapter;
