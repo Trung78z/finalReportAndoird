@@ -1,16 +1,22 @@
 package com.hcmus.management.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.hcmus.management.R;
 import com.hcmus.management.model.FoodItem;
+import com.hcmus.management.network.FoodRequest;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -54,11 +60,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         FoodItem item = items.get(position);
 
-        holder.ivFood.setImageResource(item.getImageResId());
+        // Load image from URL using Glide
+        Glide.with(holder.itemView.getContext())
+                .load(item.getImageUrl())
+                .placeholder(R.drawable.ic_placeholder) // Use your placeholder drawable
+                .error(R.drawable.ic_error) // Use your error drawable
+                .into(holder.ivFood);
+
         holder.tvFoodName.setText(item.getName());
         holder.tvFoodPrice.setText(String.format("$ %.2f", item.getPrice()));
         holder.tvQuantity.setText(String.valueOf(item.getQuantity()));
-        holder.ivChecked.setVisibility(item.isChecked() ? View.VISIBLE : View.INVISIBLE);
 
         holder.btnPlus.setOnClickListener(v -> {
             item.setQuantity(item.getQuantity() + 1);
@@ -73,9 +84,22 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         });
 
         holder.btnDelete.setOnClickListener(v -> {
-            items.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(position, items.size());
+            // Call backend delete
+            FoodRequest.deleteFood(holder.itemView.getContext(), item.getId(), new FoodRequest.Callback() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    // Remove from list and update UI
+                    items.remove(holder.getAdapterPosition());
+                    notifyItemRemoved(holder.getAdapterPosition());
+                    notifyItemRangeChanged(holder.getAdapterPosition(), items.size());
+                }
+
+                @Override
+                public void onError(String message) {
+                    Log.e("CartAdapter", "Delete failed: " + message);
+                    Toast.makeText(holder.itemView.getContext(), "Delete failed: " + message, Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 

@@ -26,6 +26,8 @@ import com.android.volley.toolbox.Volley;
 import com.hcmus.management.R;
 import com.hcmus.management.network.FoodRequest;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -201,20 +203,19 @@ public class CreateFastFoodActivity extends AppCompatActivity {
 
     private void sendFoodItemToBackend(String name, double price, String description) {
         btnCreate.setEnabled(false);
-        Toast.makeText(this, "Uploading...", Toast.LENGTH_SHORT).show();
-
         FoodRequest.sendFoodItem(
                 this,
-                requestQueue,
                 selectedImageUri,
                 name,
                 price,
                 description,
+                1,
                 new FoodRequest.Callback() {
                     @Override
-                    public void onSuccess() {
+                    public void onSuccess(JSONObject response) {
                         btnCreate.setEnabled(true);
                         Toast.makeText(CreateFastFoodActivity.this, "Food item created successfully!", Toast.LENGTH_SHORT).show();
+                        finish();
                         clearForm();
                     }
 

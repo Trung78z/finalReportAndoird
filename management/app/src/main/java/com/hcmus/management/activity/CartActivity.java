@@ -31,8 +31,6 @@ public class CartActivity extends AppCompatActivity {
         adapter = new CartAdapter(foodItems);
         rvCartItems.setAdapter(adapter);
 
-        // Thêm item test
-        FoodItem item = new FoodItem("Burger With Meat", 12.23, 1, true, R.drawable.sample_burger);
-        adapter.addItem(item);
+
     }
 }

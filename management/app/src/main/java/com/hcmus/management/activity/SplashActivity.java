@@ -2,6 +2,7 @@ package com.hcmus.management.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,9 +12,6 @@ import com.hcmus.management.network.AuthRequest;
 import com.hcmus.management.network.VolleySingleton;
 
 import org.json.JSONObject;
-
-import android.util.Log;
-import android.widget.Toast;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -43,7 +41,6 @@ public class SplashActivity extends AppCompatActivity {
             public void onSuccess(JSONObject response) {
                 // Get token from SharedPreferences (already saved by AuthRequest)
                 String newAccessToken = AuthRequest.getAccessToken(SplashActivity.this);
-                Toast.makeText(SplashActivity.this, "Token refreshed", Toast.LENGTH_SHORT).show();
 
                 if (newAccessToken != null && !newAccessToken.isEmpty()) {
                     goToHome();
@@ -56,7 +53,6 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onError(String message) {
                 Log.e(TAG, "refreshToken error: " + message);
-                Toast.makeText(SplashActivity.this, "Token refresh failed", Toast.LENGTH_SHORT).show();
                 goToLogin();
             }
         });
@@ -64,14 +60,12 @@ public class SplashActivity extends AppCompatActivity {
 
     private void goToHome() {
         Log.d(TAG, "Navigating to HomeActivity");
-        Toast.makeText(this, "Going to Home", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 
     private void goToLogin() {
         Log.d(TAG, "Navigating to LoginActivity");
-        Toast.makeText(this, "Going to Login", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }

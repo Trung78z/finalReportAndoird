@@ -8,9 +8,17 @@ import android.widget.ImageButton;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.hcmus.management.R;
 import com.hcmus.management.adapter.CartAdapter;
 import com.hcmus.management.model.FoodItem;
+import com.hcmus.management.network.FoodRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,30 +36,31 @@ public class ManagerFoodActivity extends BaseActivity {
         foodItems = new ArrayList<>();
         adapter = new CartAdapter(foodItems);
         rvCartItems.setAdapter(adapter);
-        FoodItem item = new FoodItem("Burger With Meat", 12.23, 1, true, R.drawable.sample_burger);
-        adapter.addItem(item);
-        adapter.addItem(item);
-        adapter.addItem(item);
-        adapter.addItem(item);
-        adapter.addItem(item);
-        adapter.addItem(item);
-        adapter.addItem(item);
-        adapter.addItem(item);
-        adapter.addItem(item);
-        adapter.addItem(item);
 
-
+        fetchFoodList(); // <-- Fetch from API
 
         btnBack = findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(v -> {
-            finish();
-        });
+        btnBack.setOnClickListener(v -> finish());
         Button btnAddNew = findViewById(R.id.btnAddNew);
         btnAddNew.setOnClickListener(v -> {
             Intent intent = new Intent(this, CreateFastFoodActivity.class);
             startActivity(intent);
         });
+    }
 
+    private void fetchFoodList() {
+        FoodRequest.fetchFoodList(this, new FoodRequest.FoodListCallback() {
+            @Override
+            public void onSuccess(List<FoodItem> items) {
+                foodItems.clear();
+                foodItems.addAll(items);
+                adapter.notifyDataSetChanged();
+            }
+            @Override
+            public void onError(String message) {
+                // Handle error (show Toast, etc.)
+            }
+        });
     }
 
     @Override

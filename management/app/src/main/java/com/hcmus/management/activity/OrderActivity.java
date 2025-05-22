@@ -43,9 +43,6 @@ public class OrderActivity extends BaseActivity {
         rvCartItems.setAdapter(adapter);
 
 
-        FoodItem item = new FoodItem("Burger With Meat", 12.23, 1, true, R.drawable.sample_burger);
-        adapter.addItem(item);
-
         btnOrderNow.setOnClickListener(v -> {
             Intent intent = new Intent(this, PaymentActivity.class);
             startActivity(intent);

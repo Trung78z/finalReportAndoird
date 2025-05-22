@@ -1,26 +1,26 @@
 package com.hcmus.management.model;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class FoodItem {
+public class FoodItem implements Serializable {
     private String id;
     private String name;
+    private String description;
     private double price;
     private int quantity;
-    private boolean isChecked;
-    private int imageResId;
-    private double unitPrice;
-    public FoodItem(String name, double price, int quantity, boolean isChecked, int imageResId) {
-        this.name = name;
-        this.price = price;
-        this.unitPrice = price;
-        this.quantity = quantity;
-        this.isChecked = isChecked;
-        this.imageResId = imageResId;
-    }
-    public double getPrice() {
-        return unitPrice * quantity;
-    }
+    private String imageUrl;
+    private int categoryId;
 
+    public FoodItem(String id, String name, String description, double price, int quantity, String imageUrl, int categoryId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.imageUrl = imageUrl;
+        this.categoryId = categoryId;
+    }
 }

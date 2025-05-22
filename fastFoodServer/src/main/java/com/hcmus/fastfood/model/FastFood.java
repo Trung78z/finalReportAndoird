@@ -1,12 +1,8 @@
 package com.hcmus.fastfood.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -16,17 +12,15 @@ import lombok.Data;
 @Data
 public class FastFood {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private String id; // Manually set UUID (e.g., UUID.randomUUID().toString())
+
     private String name;
     private String description;
     private double price;
-    // image with base64 format
-    @Column(columnDefinition = "TEXT")
-    @Lob
-    private String image;
+
+    private String imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    
 }

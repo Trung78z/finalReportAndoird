@@ -7,18 +7,21 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.hcmus.management.R;
-import com.hcmus.management.model.CardItem;
+import com.hcmus.management.model.FoodItem;
+import com.hcmus.management.network.FoodRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends BaseActivity {
+    private List<FoodItem> foodItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.populateCardItems();
+        fetchFoodList();
     }
 
     @Override
@@ -32,26 +35,29 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-    private void populateCardItems() {
+    private void populateCardItems(List<FoodItem> foodItems) {
         GridLayout gridContainer = findViewById(R.id.grid_container);
         gridContainer.removeAllViews();
-
-        List<CardItem> foodItems = getCardItems();
-        for (CardItem item : foodItems) {
+        for (FoodItem item : foodItems) {
             View cardView = getLayoutInflater().inflate(R.layout.card_fastfood, gridContainer, false);
 
             ImageView ivFood = cardView.findViewById(R.id.iv_food);
             TextView tvName = cardView.findViewById(R.id.tv_food_name);
             TextView tvPrice = cardView.findViewById(R.id.tv_food_price);
 
-            ivFood.setImageResource(item.getImageResId());
+            Glide.with(ivFood.getContext())
+                    .load(item.getImageUrl())
+                    .placeholder(R.drawable.ic_placeholder)
+                    .error(R.drawable.ic_error)
+                    .into(ivFood);
             tvName.setText(item.getName());
             tvPrice.setText(String.format("$%.2f", item.getPrice()));
 
             cardView.setOnClickListener(v -> {
                 Intent intent = new Intent(this, MenuDetailActivity.class);
+                // Pass the food item to the detail activity
+                intent.putExtra("food_item", item);
                 startActivity(intent);
-//                openFoodDetails(item);
             });
 
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
@@ -63,16 +69,19 @@ public class HomeActivity extends BaseActivity {
         }
     }
 
+    private void fetchFoodList() {
+        FoodRequest.fetchFoodList(this, new FoodRequest.FoodListCallback() {
+            @Override
+            public void onSuccess(List<FoodItem> items) {
+                foodItems.clear();
+                foodItems.addAll(items);
+                populateCardItems(foodItems); // <-- update UI after data is loaded
+            }
 
-    private List<CardItem> getCardItems() {
-        List<CardItem> items = new ArrayList<>();
-        items.add(new CardItem("12331", "Burger With Meat", 12.23, R.drawable.burger_with_meat));
-        items.add(new CardItem("12331", "Burger With Meat", 12.23, R.drawable.burger_with_meat));
-        items.add(new CardItem("12331", "Burger With Meat", 12.23, R.drawable.burger_with_meat));
-        items.add(new CardItem("1233", "Chicken Sandwic", 14, R.drawable.burger_with_meat));
-        items.add(new CardItem("1234", "French Fries", 17, R.drawable.burger_with_meat));
-        items.add(new CardItem("1235", "Pizza", 12.23, R.drawable.burger_with_meat));
-        items.add(new CardItem("1236", "Burger With Meat", 18, R.drawable.burger_with_meat));
-        return items;
+            @Override
+            public void onError(String message) {
+                // Handle error (show Toast, etc.)
+            }
+        });
     }
 }

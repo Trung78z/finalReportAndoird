@@ -17,7 +17,7 @@ POST {{BaseURL}}/auth/register
 Content-Type: application/json
 
 {
-    "username": "test",
+    "username": "test123",
     "password": "test123",
     "email": "test@gmail.com"
 }
@@ -34,8 +34,13 @@ Content-Type: application/json
 
 ###
 POST {{BaseURL}}/category
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiaWF0IjoxNzQ3OTI1NzAyLCJleHAiOjE3NDc5NjE3MDJ9.XZFDpV89-aYUs-TzhwjO4055VoHpMu84cbbujaxHlHE
 Content-Type: application/json
 
 {
   "name": "Burger"
 }
+
+###
+GET {{BaseURL}}/food
+Content-Type: application/json
