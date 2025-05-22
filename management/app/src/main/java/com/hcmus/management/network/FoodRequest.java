@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FoodRequest {
+    public class FoodRequest {
 
     private static final String TAG = "FoodRequest";
     private static final int MAX_IMAGE_SIZE = 1024; // Max width/height in pixels
@@ -109,7 +109,18 @@ public class FoodRequest {
                     }
                     callback.onError(errorMsg);
                 }
-        );
+        ) {
+            @Override
+            public java.util.Map<String, String> getHeaders() {
+                java.util.Map<String, String> headers = new java.util.HashMap<>();
+                String token = AuthRequest.getAccessToken(context);
+                if (token != null) {
+                    headers.put("Authorization", "Bearer " + token);
+                }
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
         requestQueue.add(request);
     }
 

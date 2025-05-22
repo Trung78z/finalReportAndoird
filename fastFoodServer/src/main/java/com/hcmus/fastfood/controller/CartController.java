@@ -35,7 +35,7 @@ public class CartController {
         }
     }
 
-    @GetMapping("/user")
+    @GetMapping
     public ResponseEntity<?> getCartByUserToken() {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

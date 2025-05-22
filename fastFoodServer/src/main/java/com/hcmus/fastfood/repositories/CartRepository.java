@@ -11,4 +11,7 @@ import java.util.List;
 public interface CartRepository extends JpaRepository<Cart, String> {
     @Query("SELECT c.food FROM Cart c WHERE c.user.username = :username")
     List<FastFood> findFoodsByUserName(@Param("username") String username);
+
+    @Query("SELECT c FROM Cart c JOIN FETCH c.food WHERE c.user.username = :username")
+    List<Cart> findCartsWithFoodByUserName(@Param("username") String username);
 }
