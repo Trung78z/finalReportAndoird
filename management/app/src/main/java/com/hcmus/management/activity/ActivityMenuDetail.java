@@ -75,8 +75,27 @@ public class ActivityMenuDetail extends AppCompatActivity {
         });
 
         btnBack.setOnClickListener(v -> finish());
-        btnAddToCart.setOnClickListener(v ->
-                // TODO: handle real add-to-cart logic
-                finish()); // TODO: handle real add-to-cart logic
+        btnAddToCart.setOnClickListener(v -> {
+            int quantity = Integer.parseInt(tvQuantity.getText().toString());
+            if (foodItem != null) {
+                com.hcmus.management.network.CartRequest.order(
+                        ActivityMenuDetail.this,
+                        com.hcmus.management.network.VolleySingleton.getInstance(ActivityMenuDetail.this).getRequestQueue(),
+                        foodItem.getId(), // assuming getId() returns foodId as String
+                        quantity,
+                        new com.hcmus.management.network.AuthRequest.Callback() {
+                            @Override
+                            public void onSuccess(org.json.JSONObject response) {
+                                android.widget.Toast.makeText(ActivityMenuDetail.this, "Added to cart!", android.widget.Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                            @Override
+                            public void onError(String message) {
+                                android.widget.Toast.makeText(ActivityMenuDetail.this, "Add to cart failed: " + message, android.widget.Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                );
+            }
+        });
     }
 }

@@ -12,14 +12,23 @@ Content-Type: application/json
     "password": "test123"
 }
 
+### Auth API
+POST {{BaseURL}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "trungpspy@gmail.com",
+    "username": "testuser",
+    "password": "Tien2023@"
+}
 ###
 POST {{BaseURL}}/auth/register
 Content-Type: application/json
 
 {
-    "username": "test123",
-    "password": "test123",
-    "email": "test@gmail.com"
+    "username": "test1234",
+    "password": "test1234",
+    "email": "test4@gmail.com"
 }
 
 ###
@@ -43,4 +52,14 @@ Content-Type: application/json
 
 ###
 GET {{BaseURL}}/food
+Content-Type: application/json
+
+
+###
+DELETE  {{BaseURL}}/food/8f3c6262-b335-440c-b7eb-2fa229074a43
+Content-Type: application/json
+
+
+GET {{BaseURL}}/food/8f3c6262-b335-440c-b7eb-2fa229074a43
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cnVuZ3B5eSIsImlhdCI6MTc0Nzk0MjA2OSwiZXhwIjoxNzQ3OTc4MDY5fQ.pO4d-BowsEQ7zMbB6ahzTb2Nw3Lhvi_49_ycQ6uIijk
 Content-Type: application/json

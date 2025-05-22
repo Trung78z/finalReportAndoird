@@ -34,8 +34,8 @@ public abstract class ActivityBase extends AppCompatActivity {
                 }
                 return true;
             } else if (itemId == R.id.nav_cart) {
-                if (!(this instanceof ActivityOrder)) {
-                    startActivity(new Intent(this, ActivityOrder.class));
+                if (!(this instanceof ActivityCart)) {
+                    startActivity(new Intent(this, ActivityCart.class));
                     overridePendingTransition(0, 0);
                 }
                 return true;
