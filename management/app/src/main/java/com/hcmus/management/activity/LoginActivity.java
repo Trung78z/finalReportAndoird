@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // Handle other types of errors (network, etc.)
                             Toast.makeText(LoginActivity.this,
-                                    "Login failed: " + message, Toast.LENGTH_SHORT).show();
+                                    "Login failed: Server not responding. Please try again later.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
