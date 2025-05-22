@@ -2,6 +2,7 @@ package com.hcmus.fastfood.controller;
 
 import com.hcmus.fastfood.dto.AddToCartDTO;
 import com.hcmus.fastfood.model.Cart;
+import com.hcmus.fastfood.model.FastFood;
 import com.hcmus.fastfood.service.CartService;
 import com.hcmus.fastfood.utils.ResponseEntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class CartController {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName(); // Extracted from JWT access token
 
-            List<Cart> carts = cartService.findCartsByUserName(username);
+            List<FastFood> carts = cartService.findCartsByUserName(username);
             return ResponseEntityUtils.success(carts);
         } catch (RuntimeException ex) {
             return ResponseEntityUtils.error(ex.getMessage(), null);

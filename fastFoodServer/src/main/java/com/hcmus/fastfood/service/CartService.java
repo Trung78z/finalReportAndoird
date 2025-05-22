@@ -7,9 +7,9 @@ import com.hcmus.fastfood.dto.AddToCartDTO;
 import com.hcmus.fastfood.model.Cart;
 import com.hcmus.fastfood.model.FastFood;
 import com.hcmus.fastfood.model.User;
+import com.hcmus.fastfood.repositories.CartRepository;
 import com.hcmus.fastfood.repositories.FastFoodRepository;
 import com.hcmus.fastfood.repositories.UserRepo;
-import com.hcmus.fastfood.repository.CartRepository;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class CartService {
         return cartRepository.save(cart);
     }
 
-    public List<Cart> findCartsByUserName(String userName) {
-        return cartRepository.findByUserNameWithFood(userName);
+    public List<FastFood> findCartsByUserName(String userName) {
+        return cartRepository.findFoodsByUserName(userName);
     }
 }
