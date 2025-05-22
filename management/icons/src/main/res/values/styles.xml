@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="login_to_yo">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">#101010</item>
+    </style>
+
+    <style name="please_sign">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#878787</item>
+    </style>
+
+    <style name="email_addre">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#101010</item>
+    </style>
+
+    <style name="enter_email">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#101010</item>
+    </style>
+    <style name="password">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#101010</item>
+    </style>
+
+</resources>
