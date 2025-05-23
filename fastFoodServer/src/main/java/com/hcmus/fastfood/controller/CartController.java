@@ -1,6 +1,7 @@
 package com.hcmus.fastfood.controller;
 
 import com.hcmus.fastfood.dto.AddToCartDTO;
+import com.hcmus.fastfood.dto.CartFoodDTO;
 import com.hcmus.fastfood.model.Cart;
 import com.hcmus.fastfood.model.FastFood;
 import com.hcmus.fastfood.service.CartService;
@@ -43,6 +44,22 @@ public class CartController {
 
             List<FastFood> carts = cartService.findCartsByUserName(username);
             return ResponseEntityUtils.success(carts);
+        } catch (RuntimeException ex) {
+            return ResponseEntityUtils.error(ex.getMessage(), null);
+        } catch (Exception ex) {
+            return ResponseEntityUtils.serverError("Server error", null);
+        }
+    }
+
+
+    @GetMapping("/user/cart-food")
+    public ResponseEntity<?> getCartFoodByUserToken() {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+
+            List<CartFoodDTO> cartFoods = cartService.findCartFoodByUserName(username);
+            return ResponseEntityUtils.success(cartFoods);
         } catch (RuntimeException ex) {
             return ResponseEntityUtils.error(ex.getMessage(), null);
         } catch (Exception ex) {

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hcmus.fastfood.dto.AddToCartDTO;
+import com.hcmus.fastfood.dto.CartFoodDTO;
 import com.hcmus.fastfood.model.Cart;
 import com.hcmus.fastfood.model.FastFood;
 import com.hcmus.fastfood.model.User;
@@ -40,5 +41,15 @@ public class CartService {
 
     public List<FastFood> findCartsByUserName(String userName) {
         return cartRepository.findFoodsByUserName(userName);
+    }
+    public List<Cart> findCartsWithFoodByUserName(String userName) {
+        return cartRepository.findCartsWithFoodByUserName(userName);
+    }
+
+    public List<CartFoodDTO> findCartFoodByUserName(String userName) {
+        List<Cart> carts = cartRepository.findCartsWithFoodByUserName(userName);
+        return carts.stream()
+                .map(cart -> new CartFoodDTO(cart.getFood(), cart.getQuantity(), cart.isActive()))
+                .toList();
     }
 }

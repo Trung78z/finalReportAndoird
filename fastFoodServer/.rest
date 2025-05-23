@@ -64,5 +64,5 @@ GET {{BaseURL}}/food/8f3c6262-b335-440c-b7eb-2fa229074a43
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cnVuZ3B5eSIsImlhdCI6MTc0Nzk0MjA2OSwiZXhwIjoxNzQ3OTc4MDY5fQ.pO4d-BowsEQ7zMbB6ahzTb2Nw3Lhvi_49_ycQ6uIijk
 Content-Type: application/json
 ###
-GET {{BaseURL}}/cart
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cnVuZ3B5eSIsImlhdCI6MTc0Nzk0ODExNiwiZXhwIjoxNzQ3OTg0MTE2fQ.L8YaSlmmH9CvVsdrvMJiMgpF6Z0Vdv_hkLNzJb2nde8
+GET {{BaseURL}}/cart/user
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cnVuZ3B5eSIsImlhdCI6MTc0Nzk2MTkxOSwiZXhwIjoxNzQ3OTk3OTE5fQ.FqiUnQ58WeKktDxMte81p77IGUj2FMWh6weMUpAQnRM
