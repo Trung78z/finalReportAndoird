@@ -18,7 +18,7 @@ Makefile
 *.iws
 *.iml
 *.ipr
-
+.rest
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
