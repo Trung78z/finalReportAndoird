@@ -36,12 +36,12 @@ public class ActivityPayment extends AppCompatActivity {
                          new AuthRequest.Callback() {
                              @Override
                              public void onSuccess(org.json.JSONObject response) {
-                                 android.widget.Toast.makeText(ActivityPayment.this, "Added to cart!", android.widget.Toast.LENGTH_SHORT).show();
+                                 android.widget.Toast.makeText(ActivityPayment.this, "Payment success!", android.widget.Toast.LENGTH_SHORT).show();
                                  finish();
                              }
                              @Override
                              public void onError(String message) {
-                                 android.widget.Toast.makeText(ActivityPayment.this, "Add to cart failed: " + message, android.widget.Toast.LENGTH_SHORT).show();
+                                 android.widget.Toast.makeText(ActivityPayment.this, "Payment failed: " + message, android.widget.Toast.LENGTH_SHORT).show();
                              }
                          }
                  );
