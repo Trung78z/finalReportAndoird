@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.management.R;
-import com.hcmus.management.adapter.CartAdapter;
+import com.hcmus.management.adapter.AdapterCart;
 import com.hcmus.management.model.CartItem;
 import com.hcmus.management.model.FoodItem;
 import com.hcmus.management.network.CartRequest;
@@ -21,7 +21,7 @@ import java.util.List;
 public class ActivityCart extends ActivityBase {
     private RecyclerView rvCartItems;
 
-    private CartAdapter adapter;
+    private AdapterCart adapter;
     private List<FoodItem> foodItems;
     private EditText etPromoCode;
     private Button btnApplyPromo, btnOrderNow;
@@ -41,11 +41,10 @@ public class ActivityCart extends ActivityBase {
         rvCartItems.setLayoutManager(new LinearLayoutManager(this));
 
         foodItems = new ArrayList<>();
-        adapter = new CartAdapter(foodItems);
+        adapter = new AdapterCart(foodItems);
         rvCartItems.setAdapter(adapter);
 
 
-        // Lấy danh sách cart từ server
         CartRequest.fetchCartList(this, new CartRequest.CartListCallback() {
             @Override
             public void onSuccess(List<CartItem> cartItems) {
@@ -54,20 +53,22 @@ public class ActivityCart extends ActivityBase {
                 int totalQuantity = 0;
                 for (CartItem cartItem : cartItems) {
                     FoodItem food = cartItem.getFood();
-                    // Nếu CartItem có quantity, set lại cho FoodItem
                     food.setQuantity(cartItem.getQuantity());
                     foodItems.add(food);
                     total += food.getPrice() * food.getQuantity();
-                    totalQuantity += food.getQuantity();
+                    totalQuantity += cartItem.getQuantity();
                 }
+                double discount = total * 0.05;
+                double totalAfterDiscount = total - discount;
+
                 adapter.notifyDataSetChanged();
-                tvTotal.setText(String.format("%.2f", total));
+                tvTotal.setText(String.format("%.2f", totalAfterDiscount));
                 tvTotalItems.setText(String.valueOf(totalQuantity));
+                tvDiscount.setText(String.format("-%.2f", discount));
             }
 
             @Override
             public void onError(String message) {
-                // Xử lý lỗi nếu cần
             }
         });
 

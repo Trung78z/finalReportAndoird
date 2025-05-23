@@ -94,28 +94,27 @@ public class CartRequest {
                 Api.getCart,
                 null,
                 response -> {
-                    List<FoodItem> foodItems = new ArrayList<>();
+                    List<CartItem> cartItems = new ArrayList<>();
                     try {
                         Log.d("CartRequest", "Response: " + response.toString());
                         JSONArray arr = response.getJSONArray("msg");
                         for (int i = 0; i < arr.length(); i++) {
                             JSONObject obj = arr.getJSONObject(i);
-                            String id = obj.optString("id", "");
-                            String name = obj.optString("name", "");
-                            String description = obj.optString("description", "");
-                            double price = obj.optDouble("price", 0);
-                            String imageUrl = obj.optString("imageUrl", "");
-                            JSONObject catObj = obj.getJSONObject("category");
+                            JSONObject foodObj = obj.getJSONObject("food");
+                            String id = foodObj.optString("id", "");
+                            String name = foodObj.optString("name", "");
+                            String description = foodObj.optString("description", "");
+                            double price = foodObj.optDouble("price", 0);
+                            String imageUrl = foodObj.optString("imageUrl", "");
+                            JSONObject catObj = foodObj.getJSONObject("category");
                             int categoryId = catObj.optInt("id", 0);
                             String categoryName = catObj.optString("name", "");
                             Category category = new Category(categoryId, categoryName);
 
-                            FoodItem food = new FoodItem(id, name, description, price, 1, Api.baseUrl + imageUrl, categoryId);
-                            foodItems.add(food);
-                        }
-                        List<CartItem> cartItems = new ArrayList<>();
-                        for (FoodItem food : foodItems) {
-                            cartItems.add(new CartItem(food.getId(), 1, food));
+                            int quantity = obj.optInt("quantity", 1);
+
+                            FoodItem food = new FoodItem(id, name, description, price, quantity, Api.baseUrl + imageUrl, categoryId);
+                            cartItems.add(new CartItem(id, quantity, food));
                         }
                         callback.onSuccess(cartItems);
                     } catch (JSONException e) {

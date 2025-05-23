@@ -22,11 +22,11 @@ import java.util.List;
 
 import lombok.NonNull;
 
-public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
+public class AdapterFood extends RecyclerView.Adapter<AdapterFood.CartViewHolder> {
 
     private List<FoodItem> items;
 
-    public CartAdapter(List<FoodItem> items) {
+    public AdapterFood(List<FoodItem> items) {
         this.items = items;
     }
 

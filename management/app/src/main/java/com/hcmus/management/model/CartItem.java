@@ -13,6 +13,4 @@ public class CartItem {
         this.quantity = quantity;
         this.food = food;
     }
-
-    // getters và setters
 }

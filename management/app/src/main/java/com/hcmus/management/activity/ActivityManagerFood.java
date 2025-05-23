@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcmus.management.R;
-import com.hcmus.management.adapter.CartAdapter;
+import com.hcmus.management.adapter.AdapterFood;
 import com.hcmus.management.model.FoodItem;
 import com.hcmus.management.network.FoodRequest;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityManagerFood extends ActivityBase {
-    private CartAdapter adapter;
+    private AdapterFood adapter;
     private List<FoodItem> foodItems;
     private ImageButton btnBack;
     private RecyclerView rvCartItems;
@@ -27,7 +27,7 @@ public class ActivityManagerFood extends ActivityBase {
         rvCartItems = findViewById(R.id.rvCartItems);
         rvCartItems.setLayoutManager(new LinearLayoutManager(this));
         foodItems = new ArrayList<>();
-        adapter = new CartAdapter(foodItems);
+        adapter = new AdapterFood(foodItems);
         rvCartItems.setAdapter(adapter);
 
         fetchFoodList(); // <-- Fetch from API

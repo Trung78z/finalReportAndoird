@@ -22,11 +22,11 @@ import java.util.List;
 
 import lombok.NonNull;
 
-public class AdapterFood extends RecyclerView.Adapter<AdapterFood.CartViewHolder> {
+public class AdapterCart extends RecyclerView.Adapter<AdapterCart.CartViewHolder> {
 
     private List<FoodItem> items;
 
-    public AdapterFood(List<FoodItem> items) {
+    public AdapterCart(List<FoodItem> items) {
         this.items = items;
     }
 
@@ -85,21 +85,21 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.CartViewHolder
 
         holder.btnDelete.setOnClickListener(v -> {
             // Call backend delete
-            FoodRequest.deleteFood(holder.itemView.getContext(), item.getId(), new FoodRequest.Callback() {
-                @Override
-                public void onSuccess(JSONObject response) {
-                    // Remove from list and update UI
-                    items.remove(holder.getAdapterPosition());
-                    notifyItemRemoved(holder.getAdapterPosition());
-                    notifyItemRangeChanged(holder.getAdapterPosition(), items.size());
-                }
-
-                @Override
-                public void onError(String message) {
-                    Log.e("CartAdapter", "Delete failed: " + message);
-                    Toast.makeText(holder.itemView.getContext(), "Delete failed: " + message, Toast.LENGTH_SHORT).show();
-                }
-            });
+//            FoodRequest.deleteFood(holder.itemView.getContext(), item.getId(), new FoodRequest.Callback() {
+//                @Override
+//                public void onSuccess(JSONObject response) {
+//                    // Remove from list and update UI
+//                    items.remove(holder.getAdapterPosition());
+//                    notifyItemRemoved(holder.getAdapterPosition());
+//                    notifyItemRangeChanged(holder.getAdapterPosition(), items.size());
+//                }
+//
+//                @Override
+//                public void onError(String message) {
+//                    Log.e("CartAdapter", "Delete failed: " + message);
+//                    Toast.makeText(holder.itemView.getContext(), "Delete failed: " + message, Toast.LENGTH_SHORT).show();
+//                }
+//            });
         });
     }
 
