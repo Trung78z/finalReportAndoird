@@ -11,4 +11,5 @@ public class Api {
     public static String getCart = baseUrl + "/cart/user/cart-food";
     public static String createCart = baseUrl + "/cart";
     public static String deleteCart = baseUrl + "/cart";
+    public static String payment = baseUrl + "/transactions";
 }

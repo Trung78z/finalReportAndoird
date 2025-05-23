@@ -8,6 +8,9 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.management.R;
+import com.hcmus.management.network.AuthRequest;
+import com.hcmus.management.network.CartRequest;
+import com.hcmus.management.network.VolleySingleton;
 
 public class ActivityPayment extends AppCompatActivity {
     
@@ -25,5 +28,23 @@ public class ActivityPayment extends AppCompatActivity {
         // Now you can use 'total', for example:
          TextView tvTotal = findViewById(R.id.tvTotal);
          tvTotal.setText("$ " +total);
+         findViewById(R.id.btn_checkout).setOnClickListener(v -> {
+                 CartRequest.payment(
+                         ActivityPayment.this,
+                         VolleySingleton.getInstance(ActivityPayment.this).getRequestQueue(),
+                         Double.parseDouble(total),
+                         new AuthRequest.Callback() {
+                             @Override
+                             public void onSuccess(org.json.JSONObject response) {
+                                 android.widget.Toast.makeText(ActivityPayment.this, "Added to cart!", android.widget.Toast.LENGTH_SHORT).show();
+                                 finish();
+                             }
+                             @Override
+                             public void onError(String message) {
+                                 android.widget.Toast.makeText(ActivityPayment.this, "Add to cart failed: " + message, android.widget.Toast.LENGTH_SHORT).show();
+                             }
+                         }
+                 );
+         });
     }
 }
