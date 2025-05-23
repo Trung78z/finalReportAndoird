@@ -42,8 +42,9 @@ public class CartService {
     public List<FastFood> findCartsByUserName(String userName) {
         return cartRepository.findFoodsByUserName(userName);
     }
+
     public List<Cart> findCartsWithFoodByUserName(String userName) {
-        return cartRepository.findCartsWithFoodByUserName(userName);
+        return cartRepository.findCartsWithFoodByUserName(userName).stream().filter(Cart::isActive).toList();
     }
 
     public List<CartFoodDTO> findCartFoodByUserName(String userName) {
@@ -51,5 +52,11 @@ public class CartService {
         return carts.stream()
                 .map(cart -> new CartFoodDTO(cart.getFood(), cart.getQuantity(), cart.isActive()))
                 .toList();
+    }
+
+    public void deleteCartById(String id) {
+        Cart cart = cartRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
+        cartRepository.delete(cart);
     }
 }

@@ -61,6 +61,7 @@ public class ActivityCart extends ActivityBase {
                     FoodItem food = cartItem.getFood();
                     food.setQuantity(cartItem.getQuantity());
                     foodItems.add(food);
+                    food.setCartId(cartItem.getId());
                     total += food.getPrice() * food.getQuantity();
                     totalQuantity += cartItem.getQuantity();
                 }
@@ -80,6 +81,7 @@ public class ActivityCart extends ActivityBase {
 
         btnOrderNow.setOnClickListener(v -> {
             Intent intent = new Intent(this, ActivityPayment.class);
+            intent.putExtra("total", tvTotal.getText());
             startActivity(intent);
         });
     }

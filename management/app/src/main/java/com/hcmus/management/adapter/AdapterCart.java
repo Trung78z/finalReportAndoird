@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.hcmus.management.R;
 import com.hcmus.management.model.FoodItem;
+import com.hcmus.management.network.CartRequest;
 import com.hcmus.management.network.FoodRequest;
 
 import org.json.JSONObject;
@@ -96,21 +97,22 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.CartViewHolder
 
         holder.btnDelete.setOnClickListener(v -> {
             // Call backend delete
-//            FoodRequest.deleteFood(holder.itemView.getContext(), item.getId(), new FoodRequest.Callback() {
-//                @Override
-//                public void onSuccess(JSONObject response) {
-//                    // Remove from list and update UI
-//                    items.remove(holder.getAdapterPosition());
-//                    notifyItemRemoved(holder.getAdapterPosition());
-//                    notifyItemRangeChanged(holder.getAdapterPosition(), items.size());
-//                }
-//
-//                @Override
-//                public void onError(String message) {
-//                    Log.e("CartAdapter", "Delete failed: " + message);
-//                    Toast.makeText(holder.itemView.getContext(), "Delete failed: " + message, Toast.LENGTH_SHORT).show();
-//                }
-//            });
+            
+            CartRequest.deleteCart(holder.itemView.getContext(), item.getCartId(), new FoodRequest.Callback() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    // Remove from list and update UI
+                    items.remove(holder.getAdapterPosition());
+                    notifyItemRemoved(holder.getAdapterPosition());
+                    notifyItemRangeChanged(holder.getAdapterPosition(), items.size());
+                }
+
+                @Override
+                public void onError(String message) {
+                    Log.e("CartAdapter", "Delete failed: " + message);
+                    Toast.makeText(holder.itemView.getContext(), "Delete failed: " + message, Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
 
