@@ -14,6 +14,8 @@ public class FoodItem implements Serializable {
     private String imageUrl;
     private int categoryId;
     private boolean isChecked = false;
+    
+    private String cartId;
 
     public FoodItem(String id, String name, String description, double price, int quantity, String imageUrl, int categoryId) {
         this.id = id;

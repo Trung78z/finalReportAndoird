@@ -3,12 +3,14 @@ package com.hcmus.management.network;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.hcmus.management.common.Api;
 import com.hcmus.management.model.CartItem;
 import com.hcmus.management.model.Category;
@@ -19,7 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CartRequest {
     public static void order(Context context, RequestQueue requestQueue,
@@ -51,6 +55,39 @@ public class CartRequest {
         } catch (JSONException e) {
             callback.onError("Invalid login request format");
         }
+    }
+    
+    public static void deleteCart(Context context, String cartId, FoodRequest.Callback callback) {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        String url = Api.deleteCart + "/" + cartId; // Assuming RESTful endpoint: /foods/{id}
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.DELETE,
+                url,
+                null,
+                response -> {
+                    callback.onSuccess(response);
+                    
+                },
+                error -> {
+                    String errorMsg = "Network error";
+                    if (error.networkResponse != null) {
+                        errorMsg += " (code: " + error.networkResponse.statusCode + ")";
+                    }
+                    callback.onError(errorMsg);
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String token = AuthRequest.getAccessToken(context);
+                if (token != null) {
+                    headers.put("Authorization", "Bearer " + token);
+                }
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        requestQueue.add(request);
     }
 
     private static void onSuccess(Context context, JSONObject response, AuthRequest.Callback callback) {

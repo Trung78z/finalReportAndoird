@@ -1,9 +1,11 @@
 package com.hcmus.management.model;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class CartItem {
+public class CartItem implements Serializable {
     private String id;
     private int quantity;
     private FoodItem food;
