@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.hcmus.management.R;
 import com.hcmus.management.model.FoodItem;
+import com.hcmus.management.network.AuthRequest;
+import com.hcmus.management.network.CartRequest;
+import com.hcmus.management.network.VolleySingleton;
 
 public class ActivityMenuDetail extends AppCompatActivity {
     private ImageButton btnBack;
@@ -78,12 +81,12 @@ public class ActivityMenuDetail extends AppCompatActivity {
         btnAddToCart.setOnClickListener(v -> {
             int quantity = Integer.parseInt(tvQuantity.getText().toString());
             if (foodItem != null) {
-                com.hcmus.management.network.CartRequest.order(
+                CartRequest.order(
                         ActivityMenuDetail.this,
-                        com.hcmus.management.network.VolleySingleton.getInstance(ActivityMenuDetail.this).getRequestQueue(),
+                        VolleySingleton.getInstance(ActivityMenuDetail.this).getRequestQueue(),
                         foodItem.getId(), // assuming getId() returns foodId as String
                         quantity,
-                        new com.hcmus.management.network.AuthRequest.Callback() {
+                        new AuthRequest.Callback() {
                             @Override
                             public void onSuccess(org.json.JSONObject response) {
                                 android.widget.Toast.makeText(ActivityMenuDetail.this, "Added to cart!", android.widget.Toast.LENGTH_SHORT).show();

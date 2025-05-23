@@ -26,6 +26,36 @@ import java.util.List;
 import java.util.Map;
 
 public class CartRequest {
+    public static void payment(Context context, RequestQueue requestQueue,
+     Double totalPrice, AuthRequest.Callback callback) {
+        try {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("totalPrice", totalPrice);
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.POST,
+                    Api.payment,
+                    requestBody,
+                    response -> onSuccess(context, response, callback),
+                    error -> onError(error, callback)
+            ) {
+                @Override
+                public java.util.Map<String, String> getHeaders() {
+                    java.util.Map<String, String> headers = new java.util.HashMap<>();
+                    String accessToken = AuthRequest.getAccessToken(context);
+                    if (accessToken != null) {
+                        headers.put("Authorization", "Bearer " + accessToken);
+                    }
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
+
+            requestQueue.add(request);
+        } catch (JSONException e) {
+            callback.onError("Invalid login request format");
+        }
+    }
+    
     public static void order(Context context, RequestQueue requestQueue,
                              String foodId, Integer quantity, AuthRequest.Callback callback) {
         try {
@@ -50,7 +80,7 @@ public class CartRequest {
                     return headers;
                 }
             };
-
+            
             requestQueue.add(request);
         } catch (JSONException e) {
             callback.onError("Invalid login request format");
