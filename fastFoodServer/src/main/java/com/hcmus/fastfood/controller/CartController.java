@@ -74,6 +74,5 @@ public class CartController {
         } catch (RuntimeException e) {
             return ResponseEntityUtils.error("Food not found", null);
         }
-
     }
 }

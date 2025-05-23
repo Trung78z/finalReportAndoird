@@ -44,7 +44,7 @@ public class CartService {
     }
 
     public List<Cart> findCartsWithFoodByUserName(String userName) {
-        return cartRepository.findCartsWithFoodByUserName(userName);
+        return cartRepository.findCartsWithFoodByUserName(userName).stream().filter(Cart::isActive).toList();
     }
 
     public List<CartFoodDTO> findCartFoodByUserName(String userName) {
