@@ -25,6 +25,15 @@ import lombok.NonNull;
 public class AdapterCart extends RecyclerView.Adapter<AdapterCart.CartViewHolder> {
 
     private List<FoodItem> items;
+    private OnCartChangeListener cartChangeListener;
+
+    public interface OnCartChangeListener {
+        void onCartChanged(int totalQuantity, double totalPrice, double discount, double totalAfterDiscount);
+    }
+
+    public void setOnCartChangeListener(OnCartChangeListener listener) {
+        this.cartChangeListener = listener;
+    }
 
     public AdapterCart(List<FoodItem> items) {
         this.items = items;
@@ -74,12 +83,14 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.CartViewHolder
         holder.btnPlus.setOnClickListener(v -> {
             item.setQuantity(item.getQuantity() + 1);
             notifyItemChanged(position);
+            notifyCartChanged();
         });
 
         holder.btnMinus.setOnClickListener(v -> {
             if (item.getQuantity() > 1) {
                 item.setQuantity(item.getQuantity() - 1);
                 notifyItemChanged(position);
+                notifyCartChanged();
             }
         });
 
@@ -103,6 +114,20 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.CartViewHolder
         });
     }
 
+    private void notifyCartChanged() {
+        int totalQuantity = 0;
+        double total = 0;
+        for (FoodItem item : items) {
+            totalQuantity += item.getQuantity();
+            total += item.getPrice() * item.getQuantity();
+        }
+        double discount = total * 0.05;
+        double totalAfterDiscount = total - discount;
+        if (cartChangeListener != null) {
+            cartChangeListener.onCartChanged(totalQuantity, total, discount, totalAfterDiscount);
+        }
+    }
+
     @Override
     public int getItemCount() {
         return items.size();
@@ -111,5 +136,6 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.CartViewHolder
     public void addItem(FoodItem item) {
         items.add(item);
         notifyItemInserted(items.size() - 1);
+        notifyCartChanged();
     }
 }

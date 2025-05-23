@@ -44,6 +44,12 @@ public class ActivityCart extends ActivityBase {
         adapter = new AdapterCart(foodItems);
         rvCartItems.setAdapter(adapter);
 
+        adapter.setOnCartChangeListener((totalQuantity, total, discount, totalAfterDiscount) -> {
+            tvTotalItems.setText(String.valueOf(totalQuantity));
+            tvTotal.setText(String.format("%.2f", totalAfterDiscount));
+            tvDiscount.setText(String.format("-%.2f", discount));
+        });
+
 
         CartRequest.fetchCartList(this, new CartRequest.CartListCallback() {
             @Override
