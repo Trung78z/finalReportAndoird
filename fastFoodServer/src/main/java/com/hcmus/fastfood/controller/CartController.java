@@ -66,4 +66,14 @@ public class CartController {
             return ResponseEntityUtils.serverError("Server error", null);
         }
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCartFood(@PathVariable String id) {
+        try {
+            cartService.deleteCartById(id);
+            return ResponseEntityUtils.success("Food deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntityUtils.error("Food not found", null);
+        }
+
+    }
 }
