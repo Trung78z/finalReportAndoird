@@ -3,8 +3,10 @@ package com.hcmus.management.model;
 import java.io.Serializable;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class CartItem implements Serializable {
     private String id;
     private int quantity;

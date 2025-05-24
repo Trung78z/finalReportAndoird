@@ -10,6 +10,7 @@ public class Api {
 	public static String getFoodList = baseUrl + "/food";
 	public static String getCart = baseUrl + "/cart/user/cart-food";
 	public static String createCart = baseUrl + "/cart";
+	public static String updateCart = baseUrl + "/cart";
 	public static String deleteCart = baseUrl + "/cart";
 	public static String payment = baseUrl + "/transactions";
 }

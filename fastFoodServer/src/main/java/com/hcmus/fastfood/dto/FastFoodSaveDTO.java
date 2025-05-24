@@ -8,5 +8,6 @@ public class FastFoodSaveDTO {
     private String description;
     private double price;
     private String image; // base64 string
+    private int quantity;
     private String categoryId;
 }

@@ -17,7 +17,6 @@ public class UserMapper {
         dto.setLastName(user.getLastName());
         dto.setAddress(user.getAddress());
         dto.setCity(user.getCity());
-        dto.setPostalCode(user.getPostalCode());
         dto.setActive(user.isActive());
         dto.setRole(toRoleDTO(user.getRole()));
         return dto;

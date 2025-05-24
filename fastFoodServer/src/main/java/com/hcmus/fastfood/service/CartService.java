@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.hcmus.fastfood.dto.AddToCartDTO;
 import com.hcmus.fastfood.dto.CartFoodDTO;
+import com.hcmus.fastfood.dto.CartUpdateQuantityDTO;
 import com.hcmus.fastfood.model.Cart;
 import com.hcmus.fastfood.model.FastFood;
 import com.hcmus.fastfood.model.User;
@@ -52,6 +53,13 @@ public class CartService {
         return carts.stream()
                 .map(cart -> new CartFoodDTO(cart.getFood(), cart.getQuantity(), cart.isActive()))
                 .toList();
+    }
+
+    public void updateCartQuantity(CartUpdateQuantityDTO dto) {
+        Cart cart = cartRepository.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
+        cart.setQuantity(dto.getQuantity());
+        cartRepository.save(cart);
     }
 
     public void deleteCartById(Integer id) {

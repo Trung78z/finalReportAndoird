@@ -1,7 +1,7 @@
 start:
-	mvn clean install
+	./mvnw clean install
 	@echo "Running the application..."
-	mvn spring-boot:run
+	./mvnw spring-boot:run
 
 run:
 	@echo "Running the application..."
@@ -9,4 +9,4 @@ run:
 
 clean:
 	@echo "Cleaning the project..."
-	mvn clean
+	./mvnw clean

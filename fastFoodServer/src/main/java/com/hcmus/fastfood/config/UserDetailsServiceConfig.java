@@ -18,12 +18,12 @@ public class UserDetailsServiceConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
-            User user = userRepo.findByUsername(username)
+            User user = userRepo.findByUsernameWithRole(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
             return org.springframework.security.core.userdetails.User
                     .withUsername(user.getUsername())
                     .password(user.getPassword())
-                    .authorities("USER")
+                    .authorities(user.getRole().getName())
                     .build();
         };
     }

@@ -12,7 +12,6 @@ public class UserDTO {
     private String lastName;
     private String address;
     private String city;
-    private String postalCode;
     private boolean isActive;
     private UserRoleDTO role;
 }
