@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.hcmus.management.R;
 import com.hcmus.management.network.AuthRequest;
+import com.hcmus.management.network.Callback;
 import com.hcmus.management.network.VolleySingleton;
 
 import org.json.JSONObject;
@@ -36,7 +37,7 @@ public class ActivitySplash extends AppCompatActivity {
     }
 
     private void refreshTokenIfNeeded() {
-        AuthRequest.refreshToken(this, requestQueue, new AuthRequest.Callback() {
+        AuthRequest.refreshToken(this, requestQueue, new Callback() {
             @Override
             public void onSuccess(JSONObject response) {
                 // Get token from SharedPreferences (already saved by AuthRequest)
@@ -51,7 +52,7 @@ public class ActivitySplash extends AppCompatActivity {
             }
 
             @Override
-            public void onError(String message) {
+            public void onError(Object message) {
                 Log.e(TAG, "refreshToken error: " + message);
                 goToLogin();
             }

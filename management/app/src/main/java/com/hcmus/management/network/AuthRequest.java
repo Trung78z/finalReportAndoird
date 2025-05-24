@@ -13,7 +13,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.hcmus.management.activity.ActivityProfile;
 import com.hcmus.management.common.Api;
+import com.hcmus.management.dto.UserUpdateDTO;
+import com.hcmus.management.model.CartItem;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,13 +35,6 @@ public class AuthRequest {
     private static final String PREFS_NAME = "MyAppPrefs";
     private static final String ACCESS_TOKEN_KEY = "ACCESS_TOKEN";
     private static final String REFRESH_TOKEN_KEY = "REFRESH_TOKEN";
-
-    public interface Callback {
-        void onSuccess(JSONObject response);
-
-        void onError(String message);
-    }
-
 
     public static void initCookieManager(Context context) {
         try {
@@ -68,7 +66,7 @@ public class AuthRequest {
             callback.onError("Invalid login request format");
         }
     }
-    
+
     public static void register(Context context, RequestQueue requestQueue,
                                 String email, String password, String username, Callback callback) {
         try {
@@ -76,7 +74,7 @@ public class AuthRequest {
             requestBody.put("email", email);
             requestBody.put("password", password);
             requestBody.put("username", username);
-            
+
             JsonObjectRequest request = new JsonObjectRequest(
                     Request.Method.POST,
                     Api.apiRegister,
@@ -85,20 +83,18 @@ public class AuthRequest {
                         callback.onSuccess(response);
                     },
                     error -> {
-                        String errorMsg = "Đã xảy ra lỗi";
-                        if (error.networkResponse != null && error.networkResponse.data != null) {
-                            errorMsg = new String(error.networkResponse.data);
-                        }
-                        callback.onError(errorMsg);
+
+                        callback.onError(error);
                     }
+
             );
-            
+
             requestQueue.add(request);
         } catch (JSONException e) {
             callback.onError("Invalid register request format");
         }
     }
-    
+
 
     private static void handleLoginResponse(Context context, JSONObject response, Callback callback) {
         try {
@@ -164,6 +160,41 @@ public class AuthRequest {
         } catch (JSONException e) {
             callback.onError("Invalid refresh response format");
         }
+    }
+
+
+    public static void updateUser(Context context, UserUpdateDTO item, Callback callback) {
+        try {
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            Gson gson = new Gson();
+            JSONObject jsonObject = new JSONObject(gson.toJson(item));
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.PUT,
+                    Api.apiUpdateUser,
+                    jsonObject,
+                    response -> {
+                        callback.onSuccess(response);
+
+                    },
+                    error -> {
+                        callback.onError(error);
+                    }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<>();
+                    String token = AuthRequest.getAccessToken(context);
+                    if (token != null) {
+                        headers.put("Authorization", "Bearer " + token);
+                    }
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
+            requestQueue.add(request);
+        } catch (JSONException e) {
+        }
+
     }
 
     private static void handleRefreshError(VolleyError error, Callback callback) {
@@ -258,5 +289,33 @@ public class AuthRequest {
                 Log.e(TAG, "Failed to restore refresh token", e);
             }
         }
+    }
+
+    public static void getProfile(Context context, Callback callback) {
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                Api.apiUpdateUser,
+                null,
+                response -> {
+                    callback.onSuccess(response);
+
+                },
+                error -> {
+                    callback.onError(error);
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String token = AuthRequest.getAccessToken(context);
+                if (token != null) {
+                    headers.put("Authorization", "Bearer " + token);
+                }
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        requestQueue.add(request);
     }
 }

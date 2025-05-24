@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.hcmus.management.R;
 import com.hcmus.management.network.AuthRequest;
+import com.hcmus.management.network.Callback;
 import com.hcmus.management.network.VolleySingleton;
 
 import org.json.JSONException;
@@ -57,7 +58,7 @@ public class ActivityLogin extends AppCompatActivity {
                 VolleySingleton.getInstance(this).getRequestQueue(),
                 email,
                 password,
-                new AuthRequest.Callback() {
+                new Callback() {
                     @Override
                     public void onSuccess(JSONObject response) {
                         progressDialog.dismiss();
@@ -76,29 +77,30 @@ public class ActivityLogin extends AppCompatActivity {
                             Log.e("LOGIN_ERROR", "JSON parsing error", e);
                         }
                     }
+
                     @Override
-                    public void onError(String message) {
+                    public void onError(Object message) {
                         progressDialog.dismiss();
                         findViewById(R.id.signupBtn).setEnabled(true);
 
-                        // Try to parse server error message if present
                         try {
-                            JSONObject errorObj = new JSONObject(message);
-                            if (errorObj.has("msg")) {
-                                Toast.makeText(ActivityLogin.this, errorObj.getString("msg"), Toast.LENGTH_SHORT).show();
-                                return;
+                            if (message instanceof String) {
+
+                                JSONObject errorObj = new JSONObject(String.valueOf(message));
+
+                                if (errorObj.has("msg")) {
+                                    String errorMsg = errorObj.getString("msg");
+                                    Toast.makeText(ActivityLogin.this, errorMsg, Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                             }
-                        } catch (Exception ignored) {}
-
-
-                        // Check if this is our API error message
-                        if (message.contains("Invalid email or password")) {
-                            Toast.makeText(ActivityLogin.this, message, Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Handle other types of errors (network, etc.)
-                            Toast.makeText(ActivityLogin.this,
-                                    "Login failed: Server not responding. Please try again later.", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Log.e("LOGIN_ERROR", "Error parsing error response", e);
                         }
+
+                        Toast.makeText(ActivityLogin.this,
+                                "Login failed: Server not responding. Please try again later.",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }

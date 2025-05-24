@@ -51,7 +51,7 @@ public class CartService {
     public List<CartFoodDTO> findCartFoodByUserName(String userName) {
         List<Cart> carts = cartRepository.findCartsWithFoodByUserName(userName);
         return carts.stream()
-                .map(cart -> new CartFoodDTO(cart.getFood(), cart.getQuantity(), cart.isActive()))
+                .map(cart -> new CartFoodDTO(cart.getId(),cart.getFood(), cart.getQuantity(), cart.isActive()))
                 .toList();
     }
 

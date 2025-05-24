@@ -6,6 +6,8 @@ import com.hcmus.fastfood.utils.ResponseEntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,12 +22,9 @@ public class UserInfoController {
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(HttpServletRequest request) {
         try {
-            String authHeader = request.getHeader("Authorization");
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                return ResponseEntityUtils.error("Missing or invalid Authorization header", null);
-            }
-            String token = authHeader.substring(7);
-            UserDTO userDTO = userService.getUserFromToken(token);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName(); // Extracted from JWT access token
+            UserDTO userDTO = userService.getUserFromUserName(username);
             return ResponseEntityUtils.success(userDTO);
         } catch (Exception ex) {
             return ResponseEntityUtils.error("Invalid token or user not found", null);
@@ -39,6 +38,20 @@ public class UserInfoController {
             return ResponseEntityUtils.success(userService.getAllUsers());
         } catch (Exception ex) {
             return ResponseEntityUtils.error("Failed to get users: " + ex.getMessage(), null);
+        }
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<?> updateCurrentUser(
+            @RequestBody UserDTO userDTO,
+            HttpServletRequest request) {
+        try {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName(); // Extracted from JWT access token
+            UserDTO updatedUser = userService.updateCurrentUser(username, userDTO);
+            return ResponseEntityUtils.success(updatedUser);
+        } catch (Exception ex) {
+            return ResponseEntityUtils.error("Update failed: " + ex.getMessage(), null);
         }
     }
 

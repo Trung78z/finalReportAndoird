@@ -13,4 +13,5 @@ public class Api {
 	public static String updateCart = baseUrl + "/cart";
 	public static String deleteCart = baseUrl + "/cart";
 	public static String payment = baseUrl + "/transactions";
+	public static String apiUpdateUser = baseUrl + "/user/me";
 }

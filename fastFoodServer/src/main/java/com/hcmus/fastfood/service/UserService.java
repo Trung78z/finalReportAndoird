@@ -10,19 +10,14 @@ import com.hcmus.fastfood.dto.UserDTO;
 import com.hcmus.fastfood.mapper.UserMapper;
 import com.hcmus.fastfood.model.User;
 import com.hcmus.fastfood.repositories.UserRepository;
-import com.hcmus.fastfood.utils.JwtUtil;
 
 @Service
 public class UserService {
 
     @Autowired
-    private JwtUtil jwtUtil;
-
-    @Autowired
     private UserRepository userRepo;
 
-    public UserDTO getUserFromToken(String token) {
-        String username = jwtUtil.extractUsername(token);
+    public UserDTO getUserFromUserName(String username) {
         User user = userRepo.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return UserMapper.toDTO(user);
@@ -35,8 +30,7 @@ public class UserService {
         user.setUsername(userDTO.getUsername());
         user.setEmail(userDTO.getEmail());
         user.setPhoneNumber(userDTO.getPhoneNumber());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
+        user.setFullName(userDTO.getFullName());
         user.setAddress(userDTO.getAddress());
         user.setCity(userDTO.getCity());
         user.setActive(userDTO.isActive());
@@ -54,5 +48,19 @@ public class UserService {
                 .stream()
                 .map(UserMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public UserDTO updateCurrentUser(String username, UserDTO userDTO) {
+        User user = userRepo.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setEmail(userDTO.getEmail());
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setFullName(userDTO.getFullName());
+        user.setCity(userDTO.getCity());
+        user.setAddress(userDTO.getAddress());
+
+        userRepo.save(user);
+        return UserMapper.toDTO(user);
     }
 }

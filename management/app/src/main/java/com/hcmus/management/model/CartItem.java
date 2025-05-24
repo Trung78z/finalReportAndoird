@@ -8,11 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class CartItem implements Serializable {
-    private String id;
+    private Integer id;
     private int quantity;
     private FoodItem food;
 
-    public CartItem(String id, int quantity, FoodItem food) {
+    public CartItem(Integer id, int quantity, FoodItem food) {
         this.id = id;
         this.quantity = quantity;
         this.food = food;

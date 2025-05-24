@@ -37,15 +37,6 @@
             android:name=".activity.ActivityRegister"
             android:exported="true" />
 
-        <!--        <activity-->
-        <!--            android:name=".activity.ActivityManagerFood"-->
-        <!--            android:exported="true">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.intent.action.MAIN" />-->
-
-        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-        <!--            </intent-filter>-->
-        <!--        </activity>-->
         <activity
             android:name=".activity.ActivitySplash"
             android:exported="true">
