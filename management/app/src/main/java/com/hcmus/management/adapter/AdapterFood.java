@@ -16,7 +16,6 @@ import com.hcmus.management.R;
 import com.hcmus.management.model.FoodItem;
 import com.hcmus.management.network.FoodRequest;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -76,14 +75,14 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.CartViewHolder
 		holder.btnPlus.setOnClickListener(v -> {
 			item.setQuantity(item.getQuantity() + 1);
 			notifyItemChanged(position);
-			cartChanged(holder, item);
+			foodChanged(holder, item);
 		});
 		
 		holder.btnMinus.setOnClickListener(v -> {
 			if (item.getQuantity() > 1) {
 				item.setQuantity(item.getQuantity() - 1);
 				notifyItemChanged(position);
-				cartChanged(holder, item);
+				foodChanged(holder, item);
 			}
 		});
 		
@@ -100,14 +99,14 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.CartViewHolder
 				
 				@Override
 				public void onError(String message) {
-					Log.e("CartAdapter", "Delete failed: " + message);
+					Log.e("foodAdapter", "Delete failed: " + message);
 					Toast.makeText(holder.itemView.getContext(), "Delete failed: " + message, Toast.LENGTH_SHORT).show();
 				}
 			});
 		});
 	}
 	
-	private void cartChanged(@NonNull CartViewHolder holder, FoodItem item)  {
+	private void foodChanged(@NonNull CartViewHolder holder, FoodItem item)  {
 		FoodRequest.updateFood(holder.itemView.getContext(), item, new FoodRequest.Callback() {
 			@Override
 			public void onSuccess(JSONObject response) {
@@ -115,7 +114,7 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.CartViewHolder
 			
 			@Override
 			public void onError(String message) {
-				Log.e("CartAdapter", "Update failed: " + message);
+				Log.e("foodAdapter", "Update failed: " + message);
 				Toast.makeText(holder.itemView.getContext(), "Update failed: " + message, Toast.LENGTH_SHORT).show();
 			}
 		});

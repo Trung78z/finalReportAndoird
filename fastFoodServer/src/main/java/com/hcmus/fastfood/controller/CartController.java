@@ -2,6 +2,7 @@ package com.hcmus.fastfood.controller;
 
 import com.hcmus.fastfood.dto.AddToCartDTO;
 import com.hcmus.fastfood.dto.CartFoodDTO;
+import com.hcmus.fastfood.dto.CartUpdateQuantityDTO;
 import com.hcmus.fastfood.model.Cart;
 import com.hcmus.fastfood.model.FastFood;
 import com.hcmus.fastfood.service.CartService;
@@ -51,7 +52,6 @@ public class CartController {
         }
     }
 
-
     @GetMapping("/user/cart-food")
     public ResponseEntity<?> getCartFoodByUserToken() {
         try {
@@ -68,9 +68,9 @@ public class CartController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCartFood(@PathVariable Integer id, @RequestBody Integer quantity) {
+    public ResponseEntity<?> updateCartFood(@PathVariable Integer id, @RequestBody CartUpdateQuantityDTO dto) {
         try {
-            cartService.updateCartQuantity(id, quantity);
+            cartService.updateCartQuantity(dto);
             return ResponseEntityUtils.success("Cart updated successfully");
         } catch (RuntimeException e) {
             return ResponseEntityUtils.error("Food not found", null);
@@ -78,6 +78,7 @@ public class CartController {
             return ResponseEntityUtils.serverError("Server error", null);
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCartFood(@PathVariable Integer id) {
         try {
