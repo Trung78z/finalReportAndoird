@@ -15,6 +15,7 @@ import com.hcmus.management.model.CartItem;
 import com.hcmus.management.model.FoodItem;
 import com.hcmus.management.network.CartRequest;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +84,7 @@ public class ActivityCart extends ActivityBase {
             Intent intent = new Intent(this, ActivityPayment.class);
             intent.putExtra("total", tvTotal.getText());
             intent.putExtra("totalItem", tvTotalItems.getText());
+            intent.putExtra("foodItemList", (Serializable) foodItems);
             startActivity(intent);
         });
     }

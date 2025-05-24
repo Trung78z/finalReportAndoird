@@ -34,7 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ActivityCreateFastFood extends AppCompatActivity {
+public class ActivityCreateFood extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final int CAMERA_REQUEST = 2;
@@ -229,7 +229,7 @@ public class ActivityCreateFastFood extends AppCompatActivity {
                     @Override
                     public void onSuccess(JSONObject response) {
                         btnCreate.setEnabled(true);
-                        Toast.makeText(ActivityCreateFastFood.this, "Food item created successfully!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityCreateFood.this, "Food item created successfully!", Toast.LENGTH_SHORT).show();
                         finish();
                         clearForm();
                     }
@@ -237,7 +237,7 @@ public class ActivityCreateFastFood extends AppCompatActivity {
                     @Override
                     public void onError(String message) {
                         btnCreate.setEnabled(true);
-                        Toast.makeText(ActivityCreateFastFood.this, "Failed: " + message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityCreateFood.this, "Failed: " + message, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
