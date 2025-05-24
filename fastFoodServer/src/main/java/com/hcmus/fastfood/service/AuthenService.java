@@ -2,7 +2,7 @@ package com.hcmus.fastfood.service;
 
 import com.hcmus.fastfood.dto.ChangePasswordDTO;
 import com.hcmus.fastfood.model.User;
-import com.hcmus.fastfood.repositories.UserRepo;
+import com.hcmus.fastfood.repositories.UserRepository;
 import com.hcmus.fastfood.repositories.UserRoleRepo;
 import com.hcmus.fastfood.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class AuthenService {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepo;
     @Autowired
     private UserRoleRepo userRoleRepo;
 

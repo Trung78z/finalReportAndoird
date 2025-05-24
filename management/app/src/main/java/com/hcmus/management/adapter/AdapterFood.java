@@ -38,6 +38,7 @@ public class AdapterFood extends RecyclerView.Adapter<AdapterFood.CartViewHolder
         public CartViewHolder(@NonNull View itemView) {
             super(itemView);
             ivChecked = itemView.findViewById(R.id.ivChecked);
+            ivChecked.setVisibility(View.GONE);
             ivFood = itemView.findViewById(R.id.ivFood);
             tvFoodName = itemView.findViewById(R.id.tvFoodName);
             tvFoodPrice = itemView.findViewById(R.id.tvFoodPrice);

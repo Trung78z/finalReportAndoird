@@ -36,7 +36,7 @@ public class ActivityManagerFood extends ActivityBase {
         btnBack.setOnClickListener(v -> finish());
         Button btnAddNew = findViewById(R.id.btnAddNew);
         btnAddNew.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ActivityCreateFastFood.class);
+            Intent intent = new Intent(this, ActivityCreateFood.class);
             startActivity(intent);
         });
     }

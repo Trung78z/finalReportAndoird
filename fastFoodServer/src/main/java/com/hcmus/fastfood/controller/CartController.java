@@ -67,7 +67,7 @@ public class CartController {
         }
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCartFood(@PathVariable String id) {
+    public ResponseEntity<?> deleteCartFood(@PathVariable Integer id) {
         try {
             cartService.deleteCartById(id);
             return ResponseEntityUtils.success("Food deleted successfully");

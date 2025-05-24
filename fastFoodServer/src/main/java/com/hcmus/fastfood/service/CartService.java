@@ -10,7 +10,7 @@ import com.hcmus.fastfood.model.FastFood;
 import com.hcmus.fastfood.model.User;
 import com.hcmus.fastfood.repositories.CartRepository;
 import com.hcmus.fastfood.repositories.FastFoodRepository;
-import com.hcmus.fastfood.repositories.UserRepo;
+import com.hcmus.fastfood.repositories.UserRepository;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class CartService {
     private CartRepository cartRepository;
 
     @Autowired
-    private UserRepo userRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private FastFoodRepository fastFoodRepository;
@@ -54,7 +54,7 @@ public class CartService {
                 .toList();
     }
 
-    public void deleteCartById(String id) {
+    public void deleteCartById(Integer id) {
         Cart cart = cartRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cart not found"));
         cartRepository.delete(cart);

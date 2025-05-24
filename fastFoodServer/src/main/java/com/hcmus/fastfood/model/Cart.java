@@ -1,15 +1,18 @@
 package com.hcmus.fastfood.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(name = "cart")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -20,5 +23,8 @@ public class Cart {
     private FastFood food;
 
     private int quantity;
-    private boolean isActive;
+    @Column(name = "is_active")
+    @Builder.Default
+    private boolean isActive = true;
+
 }

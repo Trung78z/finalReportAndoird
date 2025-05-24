@@ -68,7 +68,7 @@ public class AuthRequest {
             callback.onError("Invalid login request format");
         }
     }
-
+    
     public static void register(Context context, RequestQueue requestQueue,
                                 String email, String password, String username, Callback callback) {
         try {
@@ -76,23 +76,33 @@ public class AuthRequest {
             requestBody.put("email", email);
             requestBody.put("password", password);
             requestBody.put("username", username);
+            
             JsonObjectRequest request = new JsonObjectRequest(
                     Request.Method.POST,
                     Api.apiRegister,
                     requestBody,
-                    response -> handleLoginResponse(context, response, callback),
-                    error -> handleLoginError(error, callback)
+                    response -> {
+                        callback.onSuccess(response);
+                    },
+                    error -> {
+                        String errorMsg = "Đã xảy ra lỗi";
+                        if (error.networkResponse != null && error.networkResponse.data != null) {
+                            errorMsg = new String(error.networkResponse.data);
+                        }
+                        callback.onError(errorMsg);
+                    }
             );
-
+            
             requestQueue.add(request);
         } catch (JSONException e) {
-            callback.onError("Invalid login request format");
+            callback.onError("Invalid register request format");
         }
     }
-
+    
 
     private static void handleLoginResponse(Context context, JSONObject response, Callback callback) {
         try {
+            Log.d("register", response.toString());
             if (response.getBoolean("success")) {
                 String accessToken = response.getJSONObject("msg").getString("accessToken");
                 saveAccessToken(context, accessToken);
