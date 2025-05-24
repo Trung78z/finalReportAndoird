@@ -1,7 +1,6 @@
 package com.hcmus.management.activity;
 
 import android.os.Bundle;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -25,7 +24,9 @@ public class ActivityPayment extends AppCompatActivity {
         });
         
         String total = getIntent().getStringExtra("total");
-        // Now you can use 'total', for example:
+        String totalItem = getIntent().getStringExtra("totalItem");
+        TextView tvTotalItem = findViewById(R.id.totalItem);
+        tvTotalItem.setText(totalItem);
          TextView tvTotal = findViewById(R.id.tvTotal);
          tvTotal.setText("$ " +total);
          findViewById(R.id.btn_checkout).setOnClickListener(v -> {

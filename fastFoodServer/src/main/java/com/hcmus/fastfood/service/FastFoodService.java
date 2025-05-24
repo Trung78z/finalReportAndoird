@@ -1,20 +1,19 @@
 package com.hcmus.fastfood.service;
 
-import com.hcmus.fastfood.dto.FastFoodSaveDTO;
-import com.hcmus.fastfood.model.Category;
-import com.hcmus.fastfood.model.FastFood;
-import com.hcmus.fastfood.repositories.CategoryRepository;
-import com.hcmus.fastfood.repositories.FastFoodRepository;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.hcmus.fastfood.dto.FastFoodSaveDTO;
+import com.hcmus.fastfood.model.Category;
+import com.hcmus.fastfood.model.FastFood;
+import com.hcmus.fastfood.repositories.CategoryRepository;
+import com.hcmus.fastfood.repositories.FastFoodRepository;
 
 @Service
 public class FastFoodService {
@@ -30,7 +29,6 @@ public class FastFoodService {
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
         FastFood fastFood = new FastFood();
-        fastFood.setId(UUID.randomUUID().toString());
         fastFood.setName(dto.getName());
         fastFood.setDescription(dto.getDescription());
         fastFood.setPrice(dto.getPrice());

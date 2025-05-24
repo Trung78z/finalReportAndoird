@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.hcmus.fastfood.dto.UserDTO;
 import com.hcmus.fastfood.mapper.UserMapper;
 import com.hcmus.fastfood.model.User;
-import com.hcmus.fastfood.repositories.UserRepo;
+import com.hcmus.fastfood.repositories.UserRepository;
 import com.hcmus.fastfood.utils.JwtUtil;
 
 @Service
@@ -19,7 +19,7 @@ public class UserService {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepo;
 
     public UserDTO getUserFromToken(String token) {
         String username = jwtUtil.extractUsername(token);

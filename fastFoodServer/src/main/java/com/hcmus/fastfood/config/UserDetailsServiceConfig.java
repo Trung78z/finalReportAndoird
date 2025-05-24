@@ -7,13 +7,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.hcmus.fastfood.model.User;
-import com.hcmus.fastfood.repositories.UserRepo;
+import com.hcmus.fastfood.repositories.UserRepository;
 
 @Configuration
 public class UserDetailsServiceConfig {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepo;
 
     @Bean
     public UserDetailsService userDetailsService() {

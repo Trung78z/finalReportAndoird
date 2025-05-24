@@ -71,6 +71,7 @@
 
                 <!-- Burger Category -->
                 <LinearLayout
+                    android:id="@+id/burger"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginEnd="16dp"
@@ -80,7 +81,6 @@
                     android:padding="8dp">
 
                     <ImageView
-                        android:id="@+id/burger"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/ic_burger" />
@@ -96,6 +96,7 @@
 
                 <!-- Taco Category -->
                 <LinearLayout
+                    android:id="@+id/taco"
                     android:layout_width="77dp"
                     android:layout_height="80dp"
                     android:layout_marginEnd="16dp"
@@ -104,7 +105,7 @@
                     android:padding="8dp">
 
                     <ImageView
-                        android:id="@+id/taco"
+
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/ic_taco" />

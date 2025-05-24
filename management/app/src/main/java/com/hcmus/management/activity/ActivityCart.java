@@ -82,6 +82,7 @@ public class ActivityCart extends ActivityBase {
         btnOrderNow.setOnClickListener(v -> {
             Intent intent = new Intent(this, ActivityPayment.class);
             intent.putExtra("total", tvTotal.getText());
+            intent.putExtra("totalItem", tvTotalItems.getText());
             startActivity(intent);
         });
     }

@@ -5,7 +5,7 @@ start:
 
 run:
 	@echo "Running the application..."
-	mvn spring-boot:run
+	./mvnw spring-boot:run
 
 clean:
 	@echo "Cleaning the project..."
