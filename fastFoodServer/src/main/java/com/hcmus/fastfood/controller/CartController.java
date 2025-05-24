@@ -66,6 +66,18 @@ public class CartController {
             return ResponseEntityUtils.serverError("Server error", null);
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCartFood(@PathVariable Integer id, @RequestBody Integer quantity) {
+        try {
+            cartService.updateCartQuantity(id, quantity);
+            return ResponseEntityUtils.success("Cart updated successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntityUtils.error("Food not found", null);
+        } catch (Exception e) {
+            return ResponseEntityUtils.serverError("Server error", null);
+        }
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCartFood(@PathVariable Integer id) {
         try {

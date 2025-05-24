@@ -40,7 +40,8 @@ public class FastFoodService {
                 String fileName = "food_" + System.currentTimeMillis() + ".png";
                 String folderPath = "src/main/resources/static/images";
                 File folder = new File(folderPath);
-                if (!folder.exists()) folder.mkdirs();
+                if (!folder.exists())
+                    folder.mkdirs();
 
                 String filePath = folderPath + "/" + fileName;
                 byte[] imageBytes = Base64.getDecoder().decode(dto.getImage());
@@ -60,6 +61,22 @@ public class FastFoodService {
     public List<FastFood> getAllFastFood() {
         return fastFoodRepository.findAll();
     }
+
+    public FastFood updateFastFood(String id, FastFoodSaveDTO dto) {
+        FastFood fastFood = fastFoodRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Fast food not found"));
+
+        Category category = categoryRepository.findById(dto.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        fastFood.setName(dto.getName());
+        fastFood.setDescription(dto.getDescription());
+        fastFood.setQuantity(dto.getQuantity());
+        fastFood.setPrice(dto.getPrice());
+        fastFood.setCategory(category);
+        return fastFoodRepository.save(fastFood);
+    }
+
     public void deleteFastFood(String id) {
         FastFood fastFood = fastFoodRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fast food not found"));

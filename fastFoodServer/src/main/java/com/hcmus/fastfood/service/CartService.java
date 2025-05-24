@@ -53,6 +53,12 @@ public class CartService {
                 .map(cart -> new CartFoodDTO(cart.getFood(), cart.getQuantity(), cart.isActive()))
                 .toList();
     }
+    public void updateCartQuantity(Integer id, Integer quantity) {
+        Cart cart = cartRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Cart not found"));
+        cart.setQuantity(quantity);
+        cartRepository.save(cart);
+    }
 
     public void deleteCartById(Integer id) {
         Cart cart = cartRepository.findById(id)

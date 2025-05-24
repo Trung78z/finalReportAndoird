@@ -27,6 +27,15 @@ public class FastFoodController {
     public List<FastFood> getAllFastFood() {
         return fastFoodService.getAllFastFood();
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateFastFood(@PathVariable String id, @RequestBody FastFoodSaveDTO dto) {
+        try {
+            FastFood updatedFood = fastFoodService.updateFastFood(id, dto);
+            return ResponseEntityUtils.success(updatedFood);
+        } catch (RuntimeException e) {
+            return ResponseEntityUtils.error("Food not found", null);
+        }
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteFastFood(@PathVariable String id) {
