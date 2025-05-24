@@ -134,7 +134,7 @@ public class AdapterCart extends RecyclerView.Adapter<AdapterCart.CartViewHolder
 	
 	private void cartChanged(@NonNull AdapterCart.CartViewHolder holder, FoodItem item) {
 		CartItem cartItem = new CartItem();
-		cartItem.setId(item.getId());
+		cartItem.setId(item.getCartId());
 		cartItem.setQuantity(item.getQuantity());
 		CartRequest.updateCart(holder.itemView.getContext(), cartItem, new CartRequest.Callback() {
 			@Override

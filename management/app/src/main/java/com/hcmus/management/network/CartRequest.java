@@ -11,7 +11,9 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.hcmus.management.common.Api;
+import com.hcmus.management.dto.PaymentDTO;
 import com.hcmus.management.model.CartItem;
 import com.hcmus.management.model.Category;
 import com.hcmus.management.model.FoodItem;
@@ -35,14 +37,15 @@ public class CartRequest {
 	}
 	
 	public static void payment(Context context, RequestQueue requestQueue,
-							   Double totalPrice, AuthRequest.Callback callback) {
+							   PaymentDTO paymentDTO, Callback callback) {
 		try {
-			JSONObject requestBody = new JSONObject();
-			requestBody.put("totalPrice", totalPrice);
+			Gson gson = new Gson();
+			JSONObject jsonObject = new JSONObject(gson.toJson(paymentDTO));
+			Log.d("checcccccccc",jsonObject.toString());
 			JsonObjectRequest request = new JsonObjectRequest(
 					Request.Method.POST,
 					Api.payment,
-					requestBody,
+					jsonObject,
 					response -> onSuccess(context, response, callback),
 					error -> onError(error, callback)
 			) {
@@ -65,7 +68,7 @@ public class CartRequest {
 	}
 	
 	public static void order(Context context, RequestQueue requestQueue,
-							 String foodId, Integer quantity, AuthRequest.Callback callback) {
+							 String foodId, Integer quantity, Callback callback) {
 		try {
 			JSONObject requestBody = new JSONObject();
 			requestBody.put("foodId", foodId);
@@ -94,12 +97,12 @@ public class CartRequest {
 			callback.onError("Invalid login request format");
 		}
 	}
-	
+
 	public static void updateCart(Context context, CartItem item, CartRequest.Callback callback) {
 		try {
 			RequestQueue requestQueue = Volley.newRequestQueue(context);
 			String url = Api.updateCart + "/" + item.getId(); // Assuming RESTful endpoint: /foods/{id}
-			
+
 			Gson gson = new Gson();
 			JSONObject jsonObject = new JSONObject(gson.toJson(item));
 			JsonObjectRequest request = new JsonObjectRequest(
@@ -108,7 +111,7 @@ public class CartRequest {
 					jsonObject,
 					response -> {
 						callback.onSuccess(response);
-						
+
 					},
 					error -> {
 						String errorMsg = "Network error";
@@ -132,10 +135,10 @@ public class CartRequest {
 			requestQueue.add(request);
 		} catch (JSONException e) {
 		}
-		
+
 	}
 	
-	public static void deleteCart(Context context, String cartId, CartRequest.Callback callback) {
+	public static void deleteCart(Context context, Integer cartId, CartRequest.Callback callback) {
 		RequestQueue requestQueue = Volley.newRequestQueue(context);
 		String url = Api.deleteCart + "/" + cartId; // Assuming RESTful endpoint: /foods/{id}
 		JsonObjectRequest request = new JsonObjectRequest(
@@ -168,7 +171,7 @@ public class CartRequest {
 		requestQueue.add(request);
 	}
 	
-	private static void onSuccess(Context context, JSONObject response, AuthRequest.Callback callback) {
+	private static void onSuccess(Context context, JSONObject response, Callback callback) {
 		try {
 			if (response.getBoolean("success")) {
 				callback.onSuccess(response);
@@ -180,7 +183,7 @@ public class CartRequest {
 		}
 	}
 	
-	private static void onError(VolleyError error, AuthRequest.Callback callback) {
+	private static void onError(VolleyError error, Callback callback) {
 		String errorMsg = "Login failed";
 		if (error.networkResponse != null && error.networkResponse.data != null) {
 			try {
@@ -220,13 +223,12 @@ public class CartRequest {
 							String description = foodObj.optString("description", "");
 							double price = foodObj.optDouble("price", 0);
 							String imageUrl = foodObj.optString("imageUrl", "");
-							JSONObject catObj = foodObj.getJSONObject("category");
-							int categoryId = catObj.optInt("id", 0);
+							int cartId = obj.optInt("id", 0);
 							
 							int quantity = obj.optInt("quantity", 1);
 							
-							FoodItem food = new FoodItem(id, name, description, price, quantity, Api.baseUrl + imageUrl, categoryId);
-							cartItems.add(new CartItem(id, quantity, food));
+							FoodItem food = new FoodItem(id, name, description, price, quantity, Api.baseUrl + imageUrl, cartId);
+							cartItems.add(new CartItem(cartId, quantity, food));
 						}
 						callback.onSuccess(cartItems);
 					} catch (JSONException e) {

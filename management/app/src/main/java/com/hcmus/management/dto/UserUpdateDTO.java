@@ -1,16 +1,12 @@
-package com.hcmus.fastfood.dto;
+package com.hcmus.management.dto;
 
 import lombok.Data;
 
 @Data
-public class UserDTO {
-    private String id;
-    private String username;
+public class UserUpdateDTO {
     private String email;
     private String phoneNumber;
     private String fullName;
     private String address;
     private String city;
-    private boolean isActive;
-    private UserRoleDTO role;
 }

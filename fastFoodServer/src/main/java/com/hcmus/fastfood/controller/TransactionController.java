@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hcmus.fastfood.dto.TransactionDTO;
 import com.hcmus.fastfood.model.Transaction;
 import com.hcmus.fastfood.service.TransactionService;
 import com.hcmus.fastfood.utils.ResponseEntityUtils;
@@ -23,11 +24,11 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping
-    public ResponseEntity<?> createTransaction(@RequestBody Transaction transaction) {
+    public ResponseEntity<?> createTransaction(@RequestBody TransactionDTO transaction) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName(); // Extracted from JWT access token
-        Transaction saved = transactionService.save(transaction, username);
-        return ResponseEntityUtils.created(saved);
+        transactionService.save(transaction, username);
+        return ResponseEntityUtils.success("Transaction created successfully");
     }
 
     @GetMapping

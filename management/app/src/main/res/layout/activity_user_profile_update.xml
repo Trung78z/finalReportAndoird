@@ -82,36 +82,20 @@
             android:padding="12dp"
             android:layout_marginBottom="12dp"/>
 
-        <!-- Date of Birth -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date of birth"
+            android:text="City"
             android:textColor="#222"
             android:textSize="15sp"/>
         <EditText
-            android:id="@+id/etDob"
+            android:id="@+id/etCity"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/edit_text_background"
-            android:hint="DD/MM/YYYY"
+            android:hint="City"
             android:textSize="15sp"
-            android:padding="12dp"
-            android:focusable="false"
-            android:layout_marginBottom="12dp"/>
-
-        <!-- Gender -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gender"
-            android:textColor="#222"
-            android:textSize="15sp"/>
-        <Spinner
-            android:id="@+id/spinnerGender"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/edit_text_background"
             android:padding="12dp"
             android:layout_marginBottom="12dp"/>
 
@@ -150,7 +134,22 @@
             android:textSize="15sp"
             android:padding="12dp"
             android:layout_marginBottom="24dp"/>
-
+        <!-- Date of Birth -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:textColor="#222"
+            android:textSize="15sp"/>
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/edit_text_background"
+            android:hint="Address"
+            android:textSize="15sp"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"/>
         <!-- Save Button -->
         <Button
             android:id="@+id/btnSave"

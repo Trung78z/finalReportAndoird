@@ -11,12 +11,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hcmus.management.R;
 import com.hcmus.management.adapter.AdapterOrder;
+import com.hcmus.management.dto.PaymentDTO;
+import com.hcmus.management.dto.TransactionItemsDTO;
 import com.hcmus.management.model.FoodItem;
 import com.hcmus.management.network.AuthRequest;
 import com.hcmus.management.network.CartRequest;
 import com.hcmus.management.network.VolleySingleton;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ActivityPayment extends AppCompatActivity {
 	
@@ -46,14 +50,21 @@ public class ActivityPayment extends AppCompatActivity {
 		AdapterOrder adapter = new AdapterOrder(this, foodItemList);
 		listView.setAdapter(adapter);
 		findViewById(R.id.btn_checkout).setOnClickListener(v -> {
+			PaymentDTO paymentDTO = new PaymentDTO();
+			paymentDTO.setTotalPrice(total);
+			List<TransactionItemsDTO> transactionItemsDTOList = foodItemList.stream()
+					.map(item -> new TransactionItemsDTO().setCartId(item.getCartId()))
+					.collect(Collectors.toList());
+			paymentDTO.setTransactionItems(transactionItemsDTOList);
 			CartRequest.payment(
 					ActivityPayment.this,
 					VolleySingleton.getInstance(ActivityPayment.this).getRequestQueue(),
-					Double.parseDouble(total),
-					new AuthRequest.Callback() {
+					paymentDTO,
+					new CartRequest.Callback() {
 						@Override
 						public void onSuccess(org.json.JSONObject response) {
 							android.widget.Toast.makeText(ActivityPayment.this, "Payment success!", android.widget.Toast.LENGTH_SHORT).show();
+							setResult(RESULT_OK, intent);
 							finish();
 						}
 						

@@ -12,8 +12,10 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.hcmus.management.R;
 import com.hcmus.management.network.AuthRequest;
+import com.hcmus.management.network.Callback;
 import com.hcmus.management.network.VolleySingleton;
 
 import org.json.JSONException;
@@ -35,7 +37,7 @@ public class ActivityRegister extends AppCompatActivity {
         signInLink.setOnClickListener(v -> {
             finish();
         });
-        signupBtn.setOnClickListener(v->{
+        signupBtn.setOnClickListener(v -> {
             handleRegister();
         });
     }
@@ -57,7 +59,7 @@ public class ActivityRegister extends AppCompatActivity {
                 VolleySingleton.getInstance(this).getRequestQueue(),
                 email,
                 password, username,
-                new AuthRequest.Callback() {
+                new Callback() {
                     @Override
                     public void onSuccess(JSONObject response) {
 
@@ -79,26 +81,37 @@ public class ActivityRegister extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(String message) {
+                    public void onError(Object message) {
                         findViewById(R.id.signupBtn).setEnabled(true);
 
-                        // Try to parse server error message if present
-                        try {
-                            JSONObject errorObj = new JSONObject(message);
-                            if (errorObj.has("msg")) {
-                                Toast.makeText(ActivityRegister.this, errorObj.getString("msg"), Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                        } catch (Exception ignored) {}
+                        String errorMessage = "Register failed: Server not responding. Please try again later.";
 
-                        // Fallback for known error or generic error
-                        if (message.contains("Invalid email or password")) {
-                            Toast.makeText(ActivityRegister.this, message, Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(ActivityRegister.this,
-                                    "Register failed: Server not responding. Please try again later.", Toast.LENGTH_SHORT).show();
+                        if (message instanceof VolleyError) {
+                            VolleyError error = (VolleyError) message;
+
+                            if (error.networkResponse != null && error.networkResponse.data != null) {
+                                try {
+                                    String body = new String(error.networkResponse.data, "UTF-8");
+                                    JSONObject errorObj = new JSONObject(body);
+
+                                    if (errorObj.has("msg")) {
+                                        errorMessage = errorObj.getString("msg");
+                                    }
+                                } catch (Exception e) {
+                                    Log.e("REGISTER_ERROR", "Failed to parse error body", e);
+                                }
+                            }
+
+                        } else if (message instanceof String) {
+                            String msgStr = (String) message;
+                            if (msgStr.contains("Invalid email or password")) {
+                                errorMessage = msgStr;
+                            }
                         }
+
+                        Toast.makeText(ActivityRegister.this, errorMessage, Toast.LENGTH_SHORT).show();
                     }
+
                 });
     }
 

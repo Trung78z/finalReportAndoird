@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,8 +13,11 @@ import com.bumptech.glide.Glide;
 import com.hcmus.management.R;
 import com.hcmus.management.model.FoodItem;
 import com.hcmus.management.network.AuthRequest;
+import com.hcmus.management.network.Callback;
 import com.hcmus.management.network.CartRequest;
 import com.hcmus.management.network.VolleySingleton;
+
+import org.json.JSONObject;
 
 public class ActivityMenuDetail extends AppCompatActivity {
     private ImageButton btnBack;
@@ -86,17 +90,19 @@ public class ActivityMenuDetail extends AppCompatActivity {
                         VolleySingleton.getInstance(ActivityMenuDetail.this).getRequestQueue(),
                         foodItem.getId(), // assuming getId() returns foodId as String
                         quantity,
-                        new AuthRequest.Callback() {
+                        new CartRequest.Callback() {
                             @Override
-                            public void onSuccess(org.json.JSONObject response) {
-                                android.widget.Toast.makeText(ActivityMenuDetail.this, "Added to cart!", android.widget.Toast.LENGTH_SHORT).show();
+                            public void onSuccess(JSONObject response) {
+                                Toast.makeText(ActivityMenuDetail.this, "Added to cart!", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
+
                             @Override
                             public void onError(String message) {
                                 android.widget.Toast.makeText(ActivityMenuDetail.this, "Add to cart failed: " + message, android.widget.Toast.LENGTH_SHORT).show();
                             }
                         }
+
                 );
             }
         });
