@@ -39,7 +39,6 @@ public class UserService {
         user.setLastName(userDTO.getLastName());
         user.setAddress(userDTO.getAddress());
         user.setCity(userDTO.getCity());
-        user.setPostalCode(userDTO.getPostalCode());
         user.setActive(userDTO.isActive());
 
         userRepo.save(user);

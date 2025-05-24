@@ -46,9 +46,6 @@ public class User {
     @Column(length = 50)
     private String city;
 
-    @Column(name = "postal_code", length = 20)
-    private String postalCode;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "role_id", nullable = false)

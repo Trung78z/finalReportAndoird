@@ -29,6 +29,7 @@
         <activity android:name=".activity.ActivityManagerFood" />
         <activity android:name=".activity.ActivityCreateFood" />
         <activity android:name=".activity.ActivityLogin" />
+        <activity android:name=".activity.ActivityCart" />
         <activity
             android:name=".activity.ActivityHome"
             android:exported="true" />
@@ -36,18 +37,15 @@
             android:name=".activity.ActivityRegister"
             android:exported="true" />
 
-<!--        <activity-->
-<!--            android:name=".activity.ActivityCart"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--        <activity-->
+        <!--            android:name=".activity.ActivityManagerFood"-->
+        <!--            android:exported="true">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-        <activity
-            android:name=".activity.ActivityCart"
-            android:exported="true" />
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
+        <!--        </activity>-->
         <activity
             android:name=".activity.ActivitySplash"
             android:exported="true">
